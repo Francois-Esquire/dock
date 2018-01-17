@@ -1,12 +1,22 @@
 {
-  "presets":["@babel/react", ["@babel/env", {
-    "forceAllTransforms": false,
-    "useBuiltIns": true,
-    "spec": true,
-    "debug": true,
-    "modules": false,
-    "targets": {
-      "browsers": "last 2 versions"
+  "presets": [
+    "@babel/preset-react",
+    ["@babel/preset-env", {
+      "forceAllTransforms": false,
+      "useBuiltIns": "usage",
+      "spec": true,
+      "modules": false,
+      "targets": {
+        "browsers": "last 2 versions"
+      }
+    }]
+  ],
+  "env": {
+    "development": {
+      "presets": [
+        ["@babel/preset-react", { "development": true }]
+      ],
+      "plugins": ["react-hot-loader/babel"]
     }
-  }]]
+  }
 }

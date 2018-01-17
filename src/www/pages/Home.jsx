@@ -3,7 +3,7 @@ import React from 'react';
 const Home = () => (
   <article>
     <header>
-      <h2>The winner this year is Kamal!!</h2>
+      <h2>The winner this year is Kamal!!!</h2>
     </header>
 
     <img src="" />

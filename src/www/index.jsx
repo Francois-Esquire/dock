@@ -1,5 +1,3 @@
-// eslint-disable-next-line
-import '@babel/polyfill';
 import React from 'react';
 import { renderToStaticMarkup, renderToString } from 'react-dom/server';
 import { StaticRouter } from 'react-router-dom';
@@ -14,7 +12,7 @@ export default async function render(ctx) {
   );
 
   const html = (
-    <html>
+    <html lang="en-US">
       <head>
         <meta charSet="utf-8" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
@@ -24,6 +22,9 @@ export default async function render(ctx) {
       </head>
       <body>
         <div id="app" dangerouslySetInnerHTML={{ __html: renderToString(app) }} />
+        <script src="/js/manifest.js" />
+        <script src="/js/vendor.js" />
+        <script src="/js/main.js" />
       </body>
     </html>
   );

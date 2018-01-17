@@ -1,0 +1,12 @@
+{
+  "presets":["@babel/react", ["@babel/env", {
+    "forceAllTransforms": false,
+    "useBuiltIns": true,
+    "spec": true,
+    "debug": true,
+    "modules": false,
+    "targets": {
+      "browsers": "last 2 versions"
+    }
+  }]]
+}

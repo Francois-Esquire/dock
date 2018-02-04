@@ -3,7 +3,10 @@ import resolve from 'rollup-plugin-node-resolve';
 
 import pkg from './package.json';
 
-const external = Object.keys(pkg.dependencies).concat(Object.keys(pkg.devDependencies)).concat('react-dom/server');
+const external = Object.keys(pkg.dependencies)
+  .concat(Object.keys(pkg.devDependencies))
+  .concat('react-dom/server');
+
 const extensions = ['.js', '.jsx'];
 
 const watch = {
@@ -49,7 +52,6 @@ const www = {
   plugins: [
     resolve({
       extensions,
-      // jail: '/src',
       modulesOnly: true,
     }),
     buble({

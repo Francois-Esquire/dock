@@ -1,2 +1,8 @@
-spec
-src
+spec/
+src/
+.babelrc
+.eslintignore
+.eslintrc
+README.md
+rollup.config.js
+webpack.config.js

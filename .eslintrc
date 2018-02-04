@@ -1,5 +1,5 @@
 {
-  "extends": "airbnb",
+  "extends": ["airbnb", "plugin:prettier/recommended"],
   "parser": "babel-eslint",
   "parserOptions": {
     "ecmaVersion": 2017,
@@ -10,14 +10,18 @@
     "node": true,
     "browser": true
   },
-  "plugins": [
-    "babel",
-    "react",
-    "import",
-    "jsx-a11y",
-    "compat"
-  ],
+  "plugins": ["babel", "react", "import", "jsx-a11y", "compat"],
   "rules": {
+    "prettier/prettier": [
+      "error",
+      {
+        "semi": true,
+        "singleQuote": true,
+        "bracketSpacing": true,
+        "trailingComma": "all",
+        "tabs": true
+      }
+    ],
     "indent": ["error", 2]
   }
 }

@@ -9,7 +9,7 @@ const resolve = {
   modules: ['node_modules'],
   descriptionFiles: ['package.json'],
   mainFields: ['module', 'browser', 'main'],
-  extensions: ['*', '.js', '.jsx', '.json', '.css', '.less'],
+  extensions: ['*', '.js', '.jsx'],
   alias: paths,
 };
 

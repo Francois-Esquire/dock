@@ -72,7 +72,4 @@ const www = {
   ],
 };
 
-module.exports = [
-  server,
-  www,
-];
+module.exports = [server, www];

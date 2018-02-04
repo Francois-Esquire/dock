@@ -20,7 +20,9 @@ const resolveLoader = {
 
 const plugins = [
   new webpack.DefinePlugin({
-    'process.env.NODE_ENV': JSON.stringify(debug ? 'development' : 'production'),
+    'process.env.NODE_ENV': JSON.stringify(
+      debug ? 'development' : 'production',
+    ),
   }),
   new webpack.optimize.ModuleConcatenationPlugin(),
   new webpack.optimize.CommonsChunkPlugin({
@@ -29,10 +31,10 @@ const plugins = [
 ];
 
 if (debug) {
-  ([
+  [
     new webpack.NamedModulesPlugin(),
     // new webpack.HotModuleReplacementPlugin(),
-  ]).forEach(plug => plugins.push(plug));
+  ].forEach(plug => plugins.push(plug));
 }
 
 const www = {
@@ -43,17 +45,14 @@ const www = {
   context: cwd,
   devtool: debug ? 'cheap-module-eval-source-map' : 'source-map',
   entry: {
-    main: (debug ? [
-      'react-hot-loader/patch',
-      // 'webpack-hot-middleware/client?path=/__hmr&timeout=2000&name=www',
-    ] : []).concat([
-      `${cwd}/src/www/main.jsx`,
-    ]),
-    vendor: [
-      'react',
-      'react-dom',
-      'react-router-dom',
-    ],
+    main: (debug
+      ? [
+          'react-hot-loader/patch',
+          // 'webpack-hot-middleware/client?path=/__hmr&timeout=2000&name=www',
+        ]
+      : []
+    ).concat([`${cwd}/src/www/main.jsx`]),
+    vendor: ['react', 'react-dom', 'react-router-dom'],
   },
   output: {
     path: `${cwd}/public`,
@@ -61,11 +60,13 @@ const www = {
     publicPath: 'http://localhost:3000',
   },
   module: {
-    rules: [{
-      test: /(\.js|\.jsx)$/,
-      exclude: /node_modules/,
-      use: 'babel',
-    }],
+    rules: [
+      {
+        test: /(\.js|\.jsx)$/,
+        exclude: /node_modules/,
+        use: 'babel',
+      },
+    ],
   },
   plugins,
 };

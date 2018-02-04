@@ -21,7 +21,10 @@ export default async function render(ctx) {
         <title>Shiva</title>
       </head>
       <body>
-        <div id="app" dangerouslySetInnerHTML={{ __html: renderToString(app) }} />
+        <div
+          id="app"
+          dangerouslySetInnerHTML={{ __html: renderToString(app) }}
+        />
         <script src="/js/manifest.js" />
         <script src="/js/vendor.js" />
         <script src="/js/main.js" />
@@ -29,9 +32,7 @@ export default async function render(ctx) {
     </html>
   );
 
-  const body = `<!DOCTYPE html>${
-    renderToStaticMarkup(html)
-  }`;
+  const body = `<!DOCTYPE html>${renderToStaticMarkup(html)}`;
 
   return body;
 }

@@ -7,7 +7,6 @@ async function API(ctx) {
   ctx.body = 'welcome to the api';
 }
 
-api
-  .get(/\/*/, API);
+api.get(/\/*/, API);
 
 export default api;

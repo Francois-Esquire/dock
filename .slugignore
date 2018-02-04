@@ -3,6 +3,7 @@ src/
 .babelrc
 .eslintignore
 .eslintrc
+.prettierrc
 README.md
 rollup.config.js
 webpack.config.js

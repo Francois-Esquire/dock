@@ -7,31 +7,34 @@ import koaCors from '@koa/cors';
 
 import www from './www';
 
-import {
-  catcher,
-  responseTime,
-  statics,
-} from './middleware';
+import { catcher, responseTime, statics } from './middleware';
 
 const app = new Koa();
 
 app
   .use(catcher)
   .use(responseTime)
-  .use(koaCors({
-    allowMethods: ['HEAD', 'GET', 'POST'],
-    credentials: true,
-    keepHeadersOnError: true,
-  }))
+  .use(
+    koaCors({
+      allowMethods: ['HEAD', 'GET', 'POST'],
+      credentials: true,
+      keepHeadersOnError: true,
+    }),
+  )
   .use(koaHelmet())
   .use(koaUserAgent)
-  .use(koaSession({
-    maxAge: (((60 * 60 * 24) * 31) * 1000),
-    httpOnly: true,
-    signed: true,
-    key: '$$',
-    // domain: `.${domain}`,
-  }, app))
+  .use(
+    koaSession(
+      {
+        maxAge: 60 * 60 * 24 * 31 * 1000,
+        httpOnly: true,
+        signed: true,
+        key: '$$',
+        // domain: `.${domain}`,
+      },
+      app,
+    ),
+  )
   .use(koaCompress());
 
 if (global.webpack) {

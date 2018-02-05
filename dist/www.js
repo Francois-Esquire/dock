@@ -15,7 +15,8 @@ const Home = () => (
     React.createElement( 'img', { src: "" }),
 
     React.createElement( 'footer', null,
-      React.createElement( 'p', null, "Come back next year to view the new winner." )
+      React.createElement( 'p', null, "Come back next year to view the new winner." ),
+      React.createElement( 'p', null, "More coming soon" )
     )
   )
 );
@@ -51,7 +52,8 @@ async function render(ctx) {
         React.createElement( 'title', null, "Shiva" )
       ),
       React.createElement( 'body', null,
-        React.createElement( 'div', { id: "app", dangerouslySetInnerHTML: { __html: server.renderToString(app) } }),
+        React.createElement( 'div', {
+          id: "app", dangerouslySetInnerHTML: { __html: server.renderToString(app) } }),
         React.createElement( 'script', { src: "/js/manifest.js" }),
         React.createElement( 'script', { src: "/js/vendor.js" }),
         React.createElement( 'script', { src: "/js/main.js" })
@@ -59,9 +61,7 @@ async function render(ctx) {
     )
   );
 
-  const body = `<!DOCTYPE html>${
-    server.renderToStaticMarkup(html)
-  }`;
+  const body = `<!DOCTYPE html>${server.renderToStaticMarkup(html)}`;
 
   return body;
 }

@@ -17,8 +17,7 @@ async function API(ctx) {
   ctx.body = 'welcome to the api';
 }
 
-api
-  .get(/\/*/, API);
+api.get(/\/*/, API);
 
 // require statement is ignored during build to reference files in dist/
 // eslint-disable-next-line import/no-unresolved
@@ -41,8 +40,14 @@ router
   .get(/\/*/, html);
 
 async function catcher(ctx, next) {
-  try { await next(); } catch (e) {
-    ctx.throw(500, ("There was an error. Please try again later.\n\n" + (e.message)), ctx);
+  try {
+    await next();
+  } catch (e) {
+    ctx.throw(
+      500,
+      ("There was an error. Please try again later.\n\n" + (e.message)),
+      ctx
+    );
   }
 }
 
@@ -50,7 +55,7 @@ async function responseTime(ctx, next) {
   var start = μs.now();
   await next();
   var end = μs.parse(μs.since(start));
-  var total = end.microseconds + (end.milliseconds * 1e3) + (end.seconds * 1e6);
+  var total = end.microseconds + end.milliseconds * 1e3 + end.seconds * 1e6;
   ctx.set('Response-Time', ((total / 1e3) + "ms"));
 }
 
@@ -58,7 +63,9 @@ async function statics(ctx, next) {
   if (/\.(ico|png|svg|css|js|json)$/.test(ctx.path)) {
     try {
       await koaSend(ctx, ctx.path, { root: ((process.cwd()) + "/public") });
-    } catch (e) { /**/ }
+    } catch (e) {
+      /**/
+    }
   } else { await next(); }
 }
 
@@ -67,20 +74,27 @@ var app = new Koa();
 app
   .use(catcher)
   .use(responseTime)
-  .use(koaCors({
-    allowMethods: ['HEAD', 'GET', 'POST'],
-    credentials: true,
-    keepHeadersOnError: true,
-  }))
+  .use(
+    koaCors({
+      allowMethods: ['HEAD', 'GET', 'POST'],
+      credentials: true,
+      keepHeadersOnError: true,
+    })
+  )
   .use(koaHelmet())
   .use(koaUserAgent)
-  .use(koaSession({
-    maxAge: (((60 * 60 * 24) * 31) * 1000),
-    httpOnly: true,
-    signed: true,
-    key: '$$',
-    // domain: `.${domain}`,
-  }, app))
+  .use(
+    koaSession(
+      {
+        maxAge: 60 * 60 * 24 * 31 * 1000,
+        httpOnly: true,
+        signed: true,
+        key: '$$',
+        // domain: `.${domain}`,
+      },
+      app
+    )
+  )
   .use(koaCompress());
 
 if (global.webpack) {

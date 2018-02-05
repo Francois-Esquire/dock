@@ -10,6 +10,7 @@ const Home = () => (
 
     <footer>
       <p>Come back next year to view the new winner.</p>
+      <p>More coming soon</p>
     </footer>
   </article>
 );

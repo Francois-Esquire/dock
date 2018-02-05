@@ -35,6 +35,8 @@ if (debug) {
     new webpack.NamedModulesPlugin(),
     // new webpack.HotModuleReplacementPlugin(),
   ].forEach(plug => plugins.push(plug));
+} else {
+  [new webpack.optimize.UglifyJsPlugin()].forEach(plug => plugins.push(plug));
 }
 
 const www = {
@@ -55,8 +57,10 @@ const www = {
     vendor: ['react', 'react-dom', 'react-router-dom'],
   },
   output: {
+    pathinfo: debug,
     path: `${cwd}/public`,
     filename: 'js/[name].js',
+    sourceMapFilename: 'maps/[filebase].map',
     publicPath: 'http://localhost:3000',
   },
   module: {

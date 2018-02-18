@@ -12,7 +12,8 @@ if (process.env.NODE_ENV !== 'production') {
   // eslint-disable-next-line import/no-extraneous-dependencies, global-require
   const { AppContainer } = require('react-hot-loader');
 
-  const renderApp = (App = Application) => {
+  // eslint-disable-next-line no-inner-declarations
+  function renderApp(App = Application) {
     const app = (
       <AppContainer>
         <BrowserRouter forceRefresh={!supportsHistory}>
@@ -22,14 +23,17 @@ if (process.env.NODE_ENV !== 'production') {
     );
 
     ReactDOM.hydrate(app, appElement);
-  };
+  }
+
+  // eslint-disable-next-line no-inner-declarations
+  function hotAppReload() {
+    // eslint-disable-next-line global-require
+    const App = require('./Application').default;
+    renderApp(App);
+  }
 
   if (module && module.hot) {
-    module.hot.accept('./Application', () => {
-      // eslint-disable-next-line global-require
-      const App = require('./Application').default;
-      renderApp(App);
-    });
+    module.hot.accept('./Application', hotAppReload);
   }
 
   renderApp();

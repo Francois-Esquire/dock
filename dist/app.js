@@ -19,8 +19,8 @@ async function API(ctx) {
 
 api.get(/\/*/, API);
 
-// require statement is ignored during build to reference files in dist/
-// eslint-disable-next-line import/no-unresolved
+// will be replaced during build by 'const render = require('./www');'
+// otherwise working for tests.
 var render = require('./www');
 
 async function html(ctx) {
@@ -60,9 +60,17 @@ async function responseTime(ctx, next) {
 }
 
 async function statics(ctx, next) {
-  if (/\.(ico|png|svg|css|js|json)$/.test(ctx.path)) {
+  if (/\.(ico|png|jpg|jpeg|svg|css|js|json)$/.test(ctx.path)) {
     try {
-      await koaSend(ctx, ctx.path, { root: ((process.cwd()) + "/public") });
+      var root = ctx.path.startsWith('/assets')
+        ? ((process.cwd()) + "/static")
+        : ((process.cwd()) + "/public");
+
+      var path = ctx.path.startsWith('/assets')
+        ? ctx.path.replace('/assets', '')
+        : ctx.path;
+
+      await koaSend(ctx, path, { root: root });
     } catch (e) {
       /**/
     }

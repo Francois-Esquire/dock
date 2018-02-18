@@ -5,27 +5,104 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 var React = _interopDefault(require('react'));
 var server = require('react-dom/server');
 var reactRouterDom = require('react-router-dom');
+var PropTypes = _interopDefault(require('prop-types'));
 
-const Home = () => (
-  React.createElement( 'article', null,
-    React.createElement( 'header', null,
-      React.createElement( 'h2', null, "The winner this year is Kamal!!!" )
-    ),
+function Button(ref) {
+  var children = ref.children;
+  var rest = {}; for (var n in ref) if(["children"].indexOf(n) === -1) rest[n] = ref[n];
+  var props = rest;
 
-    React.createElement( 'img', { src: "" }),
+  return React.createElement( 'button', props, children);
+}
 
-    React.createElement( 'footer', null,
-      React.createElement( 'p', null, "Come back next year to view the new winner." ),
-      React.createElement( 'p', null, "More coming soon" )
+Button.propTypes = {
+  children: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
+};
+
+Button.defaultProps = {
+  children: 'button',
+};
+
+const styles = {
+  article: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    display: 'flex',
+    flexFlow: 'column',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    overflow: 'scroll',
+    fontFamily: 'futura',
+  },
+  header: {
+    zIndex: 2,
+    minHeight: '400px',
+    padding: '4em',
+  },
+  h1: {
+    textAlign: 'center',
+    fontSize: '2em',
+    color: '#fff',
+  },
+  span: {
+    padding: '1em',
+  },
+  img: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    width: '100vw',
+    zIndex: 1,
+    overflow: 'scroll',
+  },
+  footer: {
+    display: 'flex',
+    flexFlow: 'row',
+    justifyContent: 'center',
+    zIndex: 2,
+    padding: '2em',
+  },
+  button: {
+    fontFamily: 'futura',
+    fontSize: '3em',
+    background: 'none',
+    color: '#fff',
+    backgroundColor: 'transparent',
+    border: '2px solid #fff',
+    borderRadius: 4,
+    margin: 'auto',
+    padding: '2em',
+  },
+};
+
+function Home() {
+  return (
+    React.createElement( 'article', { style: styles.article },
+      React.createElement( 'header', { style: styles.header },
+        React.createElement( 'h1', { style: styles.h1 },
+          React.createElement( 'span', { style: styles.span }, "Find Your Obsession"),
+          React.createElement( 'br', null ),
+          React.createElement( 'span', { style: styles.span }, "Discover Your Passion")
+        )
+      ),
+
+      React.createElement( 'img', {
+        style: styles.img, src: "assets/simone-hutsch-scrape.jpg", alt: "blue skies" }),
+
+      React.createElement( 'footer', { style: styles.footer },
+        React.createElement( Button, { style: styles.button }, "Explore Now")
+      )
     )
-  )
-);
+  );
+}
 
-function Application(props) {
+function Application() {
   return (
     React.createElement( 'main', null,
-      React.createElement( 'h1', null, "Shiva" ),
-
       React.createElement( reactRouterDom.Switch, null,
         React.createElement( reactRouterDom.Route, { component: Home })
       )

@@ -1,21 +1,23 @@
 {
+  "plugins": ["@babel/plugin-proposal-object-rest-spread"],
   "presets": [
     "@babel/preset-react",
-    ["@babel/preset-env", {
-      "forceAllTransforms": false,
-      "useBuiltIns": "usage",
-      "spec": true,
-      "modules": false,
-      "targets": {
-        "browsers": "last 2 versions"
+    [
+      "@babel/preset-env",
+      {
+        "forceAllTransforms": false,
+        "useBuiltIns": "usage",
+        "spec": true,
+        "modules": false,
+        "targets": {
+          "browsers": "last 2 versions"
+        }
       }
-    }]
+    ]
   ],
   "env": {
     "development": {
-      "presets": [
-        ["@babel/preset-react", { "development": true }]
-      ],
+      "presets": [["@babel/preset-react", { "development": true }]],
       "plugins": ["react-hot-loader/babel"]
     }
   }

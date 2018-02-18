@@ -5,8 +5,7 @@
   "version": "0.1.0",
   "main": "index.js",
   "scripts": {
-    "build":
-      "cross-env NODE_ENV=production run-s clean build:public build:dist",
+    "build": "cross-env NODE_ENV=production run-s clean build:public build:dist",
     "build:dist": "rollup -c",
     "build:public": "webpack",
     "clean": "rimraf public && rimraf dist",
@@ -25,6 +24,7 @@
     "koa-session": "^5.8.1",
     "koa-useragent": "^1.0.1",
     "microseconds": "^0.1.0",
+    "prop-types": "^15.6.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-router-dom": "^4.2.2"
@@ -73,9 +73,18 @@
     "sourceMap": true
   },
   "ava": {
-    "sources": ["src/*.{js,jsx}", "!dist/**/*", "!public/**/*"],
-    "files": ["spec/*.test.{js,jsx}"],
-    "require": ["@std/esm", "./spec/register.js"],
+    "sources": [
+      "src/*.{js,jsx}",
+      "!dist/**/*",
+      "!public/**/*"
+    ],
+    "files": [
+      "spec/*.test.{js,jsx}"
+    ],
+    "require": [
+      "@std/esm",
+      "./spec/register.js"
+    ],
     "compileEnhancements": false,
     "babel": false
   },

@@ -3,11 +3,9 @@ import { withRouter, Switch, Route } from 'react-router-dom';
 
 import Home from './pages/Home';
 
-function Application(props) {
+function Application() {
   return (
     <main>
-      <h1>Shiva</h1>
-
       <Switch>
         <Route component={Home} />
       </Switch>

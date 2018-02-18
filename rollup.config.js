@@ -74,7 +74,7 @@ const www = {
         classes: false,
         modules: false,
         destructuring: false,
-        parameterDestructuring: false,
+        parameterDestructuring: true,
         defaultParameter: false,
         conciseMethodProperty: false,
         templateString: false,

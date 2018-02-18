@@ -1,8 +1,10 @@
-/* 
+/*
   eslint
     import/no-extraneous-dependencies: 0,
     no-use-before-define: 0
 */
+
+process.env.DEBUG = 'koa';
 
 const { spawn } = require('child_process');
 const http = require('http');
@@ -20,14 +22,23 @@ const server = http.createServer((req, res) => app(req, res));
 server.listen(process.env.PORT, error => {
   if (error) throw error;
 
-  setupWebpackMiddleware();
+  setupWebpackMiddleware(server);
 
   setupWatcher();
 });
 
 function serve() {
+  console.log(
+    'before',
+    Object.keys(require.cache).filter(path => !/node_modules/g.test(path)),
+  );
   // eslint-disable-next-line global-require
   app = require('./dist/app').callback();
+
+  console.log(
+    'after',
+    Object.keys(require.cache).filter(path => !/node_modules/g.test(path)),
+  );
 }
 
 function setupWebpackMiddleware(_server) {
@@ -51,7 +62,7 @@ function setupWebpackMiddleware(_server) {
   const hot = {};
 
   if (_server) hot.server = _server;
-  // else hot.port = process.env.PORT;
+  else hot.port = process.env.PORT;
 
   const koaWebpackMiddleware = koaWebpack({
     compiler,
@@ -81,8 +92,11 @@ function setupWatcher() {
     watcher.on('change', path => {
       console.log('change in path', path);
 
-      delete require.cache[path];
-      serve();
+      if (path !== 'dist/app.js') delete require.cache[`${cwd}/dist/app.js`];
+
+      delete require.cache[`${cwd}/${path}`];
+
+      process.nextTick(serve);
     });
 
     serve();

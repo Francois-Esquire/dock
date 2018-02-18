@@ -22,9 +22,17 @@ export async function responseTime(ctx, next) {
 }
 
 export async function statics(ctx, next) {
-  if (/\.(ico|png|svg|css|js|json)$/.test(ctx.path)) {
+  if (/\.(ico|png|jpg|jpeg|svg|css|js|json)$/.test(ctx.path)) {
     try {
-      await koaSend(ctx, ctx.path, { root: `${process.cwd()}/public` });
+      const root = ctx.path.startsWith('/assets')
+        ? `${process.cwd()}/static`
+        : `${process.cwd()}/public`;
+
+      const path = ctx.path.startsWith('/assets')
+        ? ctx.path.replace('/assets', '')
+        : ctx.path;
+
+      await koaSend(ctx, path, { root });
     } catch (e) {
       /**/
     }

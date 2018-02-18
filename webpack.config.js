@@ -31,15 +31,13 @@ const plugins = [
 ];
 
 if (debug) {
-  [
-    new webpack.NamedModulesPlugin(),
-    // new webpack.HotModuleReplacementPlugin(),
-  ].forEach(plug => plugins.push(plug));
+  [new webpack.NamedModulesPlugin()].forEach(plug => plugins.push(plug));
 } else {
   [new webpack.optimize.UglifyJsPlugin()].forEach(plug => plugins.push(plug));
 }
 
 const www = {
+  plugins,
   resolve,
   resolveLoader,
   name: 'www',
@@ -47,21 +45,17 @@ const www = {
   context: cwd,
   devtool: debug ? 'cheap-module-eval-source-map' : 'source-map',
   entry: {
-    main: (debug
-      ? [
-          'react-hot-loader/patch',
-          // 'webpack-hot-middleware/client?path=/__hmr&timeout=2000&name=www',
-        ]
-      : []
-    ).concat([`${cwd}/src/www/main.jsx`]),
-    vendor: ['react', 'react-dom', 'react-router-dom'],
+    main: (debug ? ['react-hot-loader/patch'] : []).concat([
+      `${cwd}/src/www/main.jsx`,
+    ]),
+    vendor: ['prop-types', 'react', 'react-dom', 'react-router-dom'],
   },
   output: {
     pathinfo: debug,
     path: `${cwd}/public`,
     filename: 'js/[name].js',
     sourceMapFilename: 'maps/[filebase].map',
-    publicPath: 'http://localhost:3000',
+    publicPath: 'http://localhost:3000/',
   },
   module: {
     rules: [
@@ -72,7 +66,6 @@ const www = {
       },
     ],
   },
-  plugins,
 };
 
 module.exports = [www];

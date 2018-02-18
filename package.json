@@ -5,7 +5,9 @@
   "version": "0.1.0",
   "main": "index.js",
   "scripts": {
-    "build": "cross-env NODE_ENV=production run-s clean build:public build:dist",
+    "postinstall": "npm run build",
+    "build":
+      "cross-env NODE_ENV=production run-s clean build:public build:dist",
     "build:dist": "rollup -c",
     "build:public": "webpack",
     "clean": "rimraf public && rimraf dist",
@@ -73,18 +75,9 @@
     "sourceMap": true
   },
   "ava": {
-    "sources": [
-      "src/*.{js,jsx}",
-      "!dist/**/*",
-      "!public/**/*"
-    ],
-    "files": [
-      "spec/*.test.{js,jsx}"
-    ],
-    "require": [
-      "@std/esm",
-      "./spec/register.js"
-    ],
+    "sources": ["src/*.{js,jsx}", "!dist/**/*", "!public/**/*"],
+    "files": ["spec/*.test.{js,jsx}"],
+    "require": ["@std/esm", "./spec/register.js"],
     "compileEnhancements": false,
     "babel": false
   },

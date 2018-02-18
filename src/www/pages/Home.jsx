@@ -1,5 +1,7 @@
 import React from 'react';
 
+import Button from '../../components/Button';
+
 const Home = () => (
   <article>
     <header>
@@ -10,7 +12,8 @@ const Home = () => (
 
     <footer>
       <p>Come back next year to view the new winner.</p>
-      <p>More coming soon</p>
+
+      <Button>More coming soon</Button>
     </footer>
   </article>
 );

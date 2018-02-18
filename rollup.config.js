@@ -1,4 +1,5 @@
 import buble from 'rollup-plugin-buble';
+import replace from 'rollup-plugin-re';
 import resolve from 'rollup-plugin-node-resolve';
 
 import pkg from './package.json';
@@ -25,6 +26,18 @@ const server = {
     format: 'cjs',
   },
   plugins: [
+    replace({
+      patterns: [
+        {
+          test: "import render from '../www';",
+          replace: "const render = require('./www');",
+        },
+      ],
+    }),
+    resolve({
+      extensions,
+      modulesOnly: true,
+    }),
     buble({
       transform: {
         letConst: false,

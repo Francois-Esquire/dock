@@ -2,8 +2,8 @@ import test from 'ava';
 import request from 'supertest';
 import { log } from 'util';
 
-import app from '../dist/app';
-import render from '../dist/www';
+import app from '../src/server/app';
+import render from '../src/www';
 
 const server = app.callback();
 

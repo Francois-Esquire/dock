@@ -2,9 +2,9 @@ import KoaRouter from 'koa-router';
 
 import api from './api';
 
-// require statement is ignored during build to reference files in dist/
-// eslint-disable-next-line import/no-unresolved
-const render = require('./www');
+// will be replaced during build by 'const render = require('./www');'
+// otherwise working for tests.
+import render from '../www';
 
 async function html(ctx) {
   // eslint-disable-next-line no-underscore-dangle

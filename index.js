@@ -12,6 +12,8 @@ try {
   } else if (test === false) require('./dev'); // eslint-disable-line global-require
 } catch (e) {
   if (e.code === 'MODULE_NOT_FOUND')
-    console.log('please run "npm run build" before you begin.\n');
+    console.log(
+      'please make sure to run "npm install & npm run build" before you begin.\n',
+    );
   else throw e;
 }

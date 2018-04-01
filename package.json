@@ -12,7 +12,7 @@
     "build:public": "webpack",
     "clean": "rimraf dist",
     "cosmos": "cosmos --config src/components/__cosmos__/config.js",
-    "dev": "cross-env NODE_ENV=development node index.js",
+    "dev": "cross-env NODE_ENV=development node dev.js",
     "start": "node index.js",
     "test": "cross-env NODE_ENV=test ava --verbose",
     "test:watch": "npm t -- --watch"

@@ -30,6 +30,12 @@ To run the server:
   # to run the hot server.
 ```
 
+To build for deployment:
+
+```bash
+  npm run build
+```
+
 To run cosmos for component development:
 
 ```bash

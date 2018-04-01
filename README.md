@@ -6,9 +6,9 @@
 
 * [x] Hot reload for server & client using Koa, React, CSS, SCSS (modules).
 * [x] Component development experience enhanced by react-cosmos.
-* [x] Preconfigured ESlint, Stylelint, Prettier, and build chain.
 * [x] Simple testing set up using Ava and ready for articulation.
-* [x] Deployment target /dist ready on install.
+* [x] Preconfigured ESlint, Stylelint, Prettier ready out of the box.
+* [x] Deployment artifact /dist ready on install.
 
 ### Getting Started
 
@@ -56,4 +56,4 @@ To run tests:
 
 ### Requires
 
-* Node ^7.6.0 - for async/await.
+* Node ^7.6.0 - for async/await support.

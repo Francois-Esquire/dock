@@ -5,8 +5,6 @@ import { StaticRouter } from 'react-router-dom';
 
 import Application from './Application';
 
-const debug = process.env.NODE_ENV !== 'production';
-
 export default async function render(ctx) {
   const app = (
     <StaticRouter location={ctx.path} context={ctx}>
@@ -24,7 +22,7 @@ export default async function render(ctx) {
         <title>Discovery</title>
 
         {/* css */}
-        {debug ? null : <link rel="stylesheet" href="/css/main.css" />}
+        {global.webpack ? null : <link rel="stylesheet" href="/css/main.css" />}
       </head>
       <body>
         <div id="app">{app}</div>

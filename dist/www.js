@@ -77,8 +77,6 @@ if (process.env.NODE_ENV !== 'production') {
 
 var Application$1 = App;
 
-const debug = process.env.NODE_ENV !== 'production';
-
 async function render(ctx) {
   const app = (
     React.createElement( reactRouterDom.StaticRouter, { location: ctx.path, context: ctx },
@@ -96,7 +94,7 @@ async function render(ctx) {
         React.createElement( 'title', null, "Discovery" )
 
         /* css */,
-        debug ? null : React.createElement( 'link', { rel: "stylesheet", href: "/css/main.css" })
+        global.webpack ? null : React.createElement( 'link', { rel: "stylesheet", href: "/css/main.css" })
       ),
       React.createElement( 'body', null,
         React.createElement( 'div', { id: "app" }, app)

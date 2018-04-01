@@ -10,13 +10,7 @@
 * [x] Preconfigured ESlint, Stylelint, Prettier ready out of the box.
 * [x] Deployment artifact /dist ready on install.
 
-### Getting Started
-
-Before you begin, make sure to:
-
-```bash
-  npm install
-```
+### Quick Start
 
 To run the server:
 

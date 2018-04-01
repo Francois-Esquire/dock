@@ -36,7 +36,7 @@
         "byName": {},
         "bySource": {},
         "usedIds": [
-          1
+          0
         ]
       }
     }
@@ -97,7 +97,8 @@
       "node_modules/react-dom/cjs/react-dom.production.min.js": 51,
       "node_modules/react/cjs/react.production.min.js": 52,
       "multi src/www/main.jsx": 53,
-      "node_modules/extract-text-webpack-plugin/dist/loader.js??ref--5-0!node_modules/style-loader/index.js!node_modules/css-loader/index.js??ref--5-2!node_modules/postcss-loader/lib/index.js??ref--5-3!node_modules/sass-loader/lib/loader.js!src/styles/pages/home.scss": 5
+      "node_modules/extract-text-webpack-plugin/dist/loader.js??ref--5-0!node_modules/style-loader/index.js!node_modules/css-loader/index.js??ref--5-2!node_modules/postcss-loader/lib/index.js??ref--5-3!node_modules/sass-loader/lib/loader.js!src/styles/pages/home.scss": 5,
+      "node_modules/extract-text-webpack-plugin/dist/loader.js??ref--5-0!node_modules/style-loader/index.js!node_modules/css-loader/index.js??ref--5-2!node_modules/postcss-loader/lib/index.js??ref--5-3!node_modules/sass-loader/lib/loader.js!src/styles/main.scss": 54
     },
     "usedIds": {
       "0": 0,
@@ -153,7 +154,8 @@
       "50": 50,
       "51": 51,
       "52": 52,
-      "53": 53
+      "53": 53,
+      "54": 54
     }
   },
   "chunks": {
@@ -173,6 +175,27 @@
         "byIdentifier": {
           "node_modules/css-loader/lib/css-base.js": 0,
           "node_modules/css-loader/index.js??ref--5-2!node_modules/postcss-loader/lib/index.js??ref--5-3!node_modules/sass-loader/lib/loader.js!src/styles/pages/home.scss": 1
+        },
+        "usedIds": {
+          "0": 0,
+          "1": 1
+        }
+      },
+      "chunks": {
+        "byName": {},
+        "bySource": {},
+        "usedIds": [
+          1
+        ]
+      }
+    }
+  ],
+  "extract-text-webpack-plugin node_modules/extract-text-webpack-plugin/dist node_modules/css-loader/index.js??ref--5-2!node_modules/postcss-loader/lib/index.js??ref--5-3!node_modules/sass-loader/lib/loader.js!src/styles/main.scss": [
+    {
+      "modules": {
+        "byIdentifier": {
+          "node_modules/css-loader/lib/css-base.js": 0,
+          "node_modules/css-loader/index.js??ref--5-2!node_modules/postcss-loader/lib/index.js??ref--5-3!node_modules/sass-loader/lib/loader.js!src/styles/main.scss": 1
         },
         "usedIds": {
           "0": 0,

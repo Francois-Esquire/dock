@@ -1,10 +1,9 @@
 /*
   eslint
     import/no-extraneous-dependencies: 0,
-    no-use-before-define: 0
+    no-use-before-define: 0,
+    no-multi-assign: 0
 */
-
-process.env.DEBUG = 'koa';
 
 const { spawn } = require('child_process');
 const http = require('http');
@@ -15,45 +14,116 @@ const webpackConfig = require('./webpack.config');
 
 const cwd = process.cwd();
 
-let app = (req, res) => res.end('Initializing. Please wait.');
+const port = process.env.PORT || (process.env.PORT = 3000);
+const domain = `localhost:${port}`;
+const host = `http://${domain}`;
 
-const server = http.createServer((req, res) => app(req, res));
+// TODO:
+// - capture arguments to configure debug/run
+// - set up redis for session / cache (rendered html, assets)
 
-server.listen(process.env.PORT, error => {
-  if (error) throw error;
+const debug = {
+  redis: !true,
+  rollup: !true,
+  koa: true,
+};
 
-  setupWebpackMiddleware(server);
+const run = {
+  watcher: true,
+  webpack: true,
+  rollup: true,
+  redis: !true,
+};
 
-  setupWatcher();
-});
+let app = null;
+let callback = (req, res) => res.end('Initializing. Please wait.');
 
-function serve() {
-  console.log(
-    'before',
-    Object.keys(require.cache).filter(path => !/node_modules/g.test(path)),
-  );
-  // eslint-disable-next-line global-require
-  app = require('./dist/app').callback();
+async function serve() {
+  try {
+    // eslint-disable-next-line global-require
+    app = require('./dist/app');
 
-  console.log(
-    'after',
-    Object.keys(require.cache).filter(path => !/node_modules/g.test(path)),
-  );
+    callback = app.callback();
+  } catch (e) {
+    console.log(e);
+  }
 }
 
-function setupWebpackMiddleware(_server) {
+(function startup() {
+  let redis;
+  let rollup;
+
+  if (run.redis) {
+    redis = spawn('redis-server', {
+      stdio: debug.redis ? 'inherit' : null,
+    });
+  }
+
+  if (run.rollup) {
+    rollup = spawn('rollup', ['-c', '-w'], {
+      cwd,
+      env: process.env,
+      stdio: [null, null, debug.rollup ? process.stdin : null],
+    });
+  }
+
+  process.on('close', () => {
+    if (redis) redis.kill();
+    if (rollup) rollup.kill();
+  });
+
+  const server = http.createServer((req, res) => callback(req, res));
+
+  server.listen(port, async error => {
+    if (error) throw error;
+
+    if (run.watcher) await setupWatcher({ debug: true });
+
+    if (run.webpack) await setupWebpackMiddleware(server);
+
+    if (debug.koa) process.env.DEBUG = 'koa*';
+
+    serve();
+  });
+})();
+
+async function setupWatcher() {
+  const watcher = chokidar.watch(['dist/*.js'], {
+    cwd,
+  });
+
+  await new Promise(resolve => {
+    watcher.on('ready', () => {
+      watcher.on('change', path => {
+        console.log('change in path', path);
+
+        if (path !== 'dist/app.js') delete require.cache[`${cwd}/dist/app.js`];
+
+        delete require.cache[`${cwd}/${path}`];
+
+        process.nextTick(serve);
+      });
+
+      resolve();
+    });
+  });
+
+  return watcher;
+}
+
+async function setupWebpackMiddleware(_server) {
+  const publicPath = (webpackConfig[0].output.publicPath = `${host}/`);
   const compiler = webpack(webpackConfig);
 
   const dev = {
-    hot: true,
+    publicPath,
     lazy: false,
     serverSideRender: true,
-    publicPath: `${webpackConfig[0].output.publicPath}`,
+    noinfo: false,
+    quiet: false,
     watchOptions: {
       aggregateTimeout: 500,
     },
-    noinfo: false,
-    quiet: false,
     stats: {
       colors: true,
     },
@@ -73,34 +143,4 @@ function setupWebpackMiddleware(_server) {
   if (global.webpack === undefined) global.webpack = koaWebpackMiddleware;
 
   return koaWebpackMiddleware;
-}
-
-function setupWatcher() {
-  const watcher = chokidar.watch(['dist/*.js'], {
-    cwd,
-  });
-
-  watcher.on('ready', () => {
-    const rollup = spawn('rollup', ['-c', '-w'], {
-      cwd,
-    });
-
-    process.on('close', () => {
-      rollup.kill();
-    });
-
-    watcher.on('change', path => {
-      console.log('change in path', path);
-
-      if (path !== 'dist/app.js') delete require.cache[`${cwd}/dist/app.js`];
-
-      delete require.cache[`${cwd}/${path}`];
-
-      process.nextTick(serve);
-    });
-
-    serve();
-  });
-
-  return watcher;
 }

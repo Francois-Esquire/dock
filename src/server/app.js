@@ -30,7 +30,6 @@ app
         httpOnly: true,
         signed: true,
         key: '$$',
-        // domain: `.${domain}`,
       },
       app,
     ),

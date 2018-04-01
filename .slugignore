@@ -4,6 +4,7 @@ src/
 .eslintignore
 .eslintrc
 .prettierrc
+dev.js
 README.md
 rollup.config.js
 webpack.config.js

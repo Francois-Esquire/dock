@@ -1,0 +1,191 @@
+{
+  "extract-text-webpack-plugin node_modules/extract-text-webpack-plugin/dist node_modules/css-loader/index.js??ref--5-2!node_modules/postcss-loader/lib/index.js??ref--5-3!node_modules/sass-loader/lib/loader.js!src/styles/home.scss": [
+    {
+      "modules": {
+        "byIdentifier": {
+          "node_modules/css-loader/lib/css-base.js": 0,
+          "node_modules/css-loader/index.js??ref--5-2!node_modules/postcss-loader/lib/index.js??ref--5-3!node_modules/sass-loader/lib/loader.js!src/styles/home.scss": 1
+        },
+        "usedIds": {
+          "0": 0,
+          "1": 1
+        }
+      },
+      "chunks": {
+        "byName": {},
+        "bySource": {},
+        "usedIds": [
+          0
+        ]
+      }
+    }
+  ],
+  "extract-text-webpack-plugin node_modules/extract-text-webpack-plugin/dist node_modules/css-loader/index.js??ref--5-2!node_modules/postcss-loader/lib/index.js??ref--5-3!node_modules/sass-loader/lib/loader.js!src/styles/primitives/button.scss": [
+    {
+      "modules": {
+        "byIdentifier": {
+          "node_modules/css-loader/lib/css-base.js": 0,
+          "node_modules/css-loader/index.js??ref--5-2!node_modules/postcss-loader/lib/index.js??ref--5-3!node_modules/sass-loader/lib/loader.js!src/styles/primitives/button.scss": 1
+        },
+        "usedIds": {
+          "0": 0,
+          "1": 1
+        }
+      },
+      "chunks": {
+        "byName": {},
+        "bySource": {},
+        "usedIds": [
+          1
+        ]
+      }
+    }
+  ],
+  "modules": {
+    "byIdentifier": {
+      "node_modules/prop-types/index.js": 0,
+      "node_modules/react/index.js": 1,
+      "node_modules/warning/browser.js": 2,
+      "node_modules/invariant/browser.js": 3,
+      "node_modules/history/PathUtils.js": 4,
+      "node_modules/extract-text-webpack-plugin/dist/loader.js??ref--5-0!node_modules/style-loader/index.js!node_modules/css-loader/index.js??ref--5-2!node_modules/postcss-loader/lib/index.js??ref--5-3!node_modules/sass-loader/lib/loader.js!src/styles/home.scss": 5,
+      "node_modules/react-router-dom/es/index.js 4c0cac3f4e7cff4416755f23ef34380d": 6,
+      "node_modules/history/createTransitionManager.js": 7,
+      "node_modules/history/LocationUtils.js": 8,
+      "node_modules/fbjs/lib/emptyFunction.js": 9,
+      "node_modules/value-equal/index.js": 10,
+      "node_modules/resolve-pathname/index.js": 11,
+      "node_modules/core-js/modules/$.fails.js": 12,
+      "node_modules/core-js/modules/$.js": 13,
+      "node_modules/core-js/modules/$.hide.js": 14,
+      "node_modules/core-js/modules/$.core.js": 15,
+      "node_modules/core-js/modules/$.global.js": 16,
+      "node_modules/history/DOMUtils.js": 17,
+      "node_modules/fbjs/lib/emptyObject.js": 18,
+      "node_modules/object-assign/index.js": 19,
+      "node_modules/extract-text-webpack-plugin/dist/loader.js??ref--5-0!node_modules/style-loader/index.js!node_modules/css-loader/index.js??ref--5-2!node_modules/postcss-loader/lib/index.js??ref--5-3!node_modules/sass-loader/lib/loader.js!src/styles/primitives/button.scss": 20,
+      "node_modules/hoist-non-react-statics/index.js": 21,
+      "node_modules/path-to-regexp/index.js": 22,
+      "node_modules/history/createMemoryHistory.js": 23,
+      "node_modules/history/createHashHistory.js": 24,
+      "node_modules/history/createBrowserHistory.js": 25,
+      "node_modules/react-dom/index.js": 26,
+      "node_modules/babel-loader/lib/index.js!src/www/main.jsx 74b70d51be7ee5b9dcf67dcad22a6d42": 27,
+      "node_modules/core-js/modules/$.cof.js": 28,
+      "node_modules/core-js/modules/$.iobject.js": 29,
+      "node_modules/core-js/modules/$.defined.js": 30,
+      "node_modules/core-js/modules/$.to-object.js": 31,
+      "node_modules/core-js/modules/$.object-assign.js": 32,
+      "node_modules/core-js/modules/$.a-function.js": 33,
+      "node_modules/core-js/modules/$.ctx.js": 34,
+      "node_modules/core-js/modules/$.uid.js": 35,
+      "node_modules/core-js/modules/$.redefine.js": 36,
+      "node_modules/core-js/modules/$.descriptors.js": 37,
+      "node_modules/core-js/modules/$.property-desc.js": 38,
+      "node_modules/core-js/modules/$.export.js": 39,
+      "node_modules/core-js/modules/es6.object.assign.js": 40,
+      "node_modules/isarray/index.js": 41,
+      "node_modules/prop-types/lib/ReactPropTypesSecret.js": 42,
+      "node_modules/fbjs/lib/invariant.js": 43,
+      "node_modules/prop-types/factoryWithThrowingShims.js": 44,
+      "node_modules/fbjs/lib/isNode.js": 45,
+      "node_modules/fbjs/lib/isTextNode.js": 46,
+      "node_modules/fbjs/lib/containsNode.js": 47,
+      "node_modules/fbjs/lib/shallowEqual.js": 48,
+      "node_modules/fbjs/lib/getActiveElement.js": 49,
+      "node_modules/fbjs/lib/ExecutionEnvironment.js": 50,
+      "node_modules/react-dom/cjs/react-dom.production.min.js": 51,
+      "node_modules/react/cjs/react.production.min.js": 52,
+      "multi src/www/main.jsx": 53,
+      "node_modules/extract-text-webpack-plugin/dist/loader.js??ref--5-0!node_modules/style-loader/index.js!node_modules/css-loader/index.js??ref--5-2!node_modules/postcss-loader/lib/index.js??ref--5-3!node_modules/sass-loader/lib/loader.js!src/styles/pages/home.scss": 5
+    },
+    "usedIds": {
+      "0": 0,
+      "1": 1,
+      "2": 2,
+      "3": 3,
+      "4": 4,
+      "5": 5,
+      "6": 6,
+      "7": 7,
+      "8": 8,
+      "9": 9,
+      "10": 10,
+      "11": 11,
+      "12": 12,
+      "13": 13,
+      "14": 14,
+      "15": 15,
+      "16": 16,
+      "17": 17,
+      "18": 18,
+      "19": 19,
+      "20": 20,
+      "21": 21,
+      "22": 22,
+      "23": 23,
+      "24": 24,
+      "25": 25,
+      "26": 26,
+      "27": 27,
+      "28": 28,
+      "29": 29,
+      "30": 30,
+      "31": 31,
+      "32": 32,
+      "33": 33,
+      "34": 34,
+      "35": 35,
+      "36": 36,
+      "37": 37,
+      "38": 38,
+      "39": 39,
+      "40": 40,
+      "41": 41,
+      "42": 42,
+      "43": 43,
+      "44": 44,
+      "45": 45,
+      "46": 46,
+      "47": 47,
+      "48": 48,
+      "49": 49,
+      "50": 50,
+      "51": 51,
+      "52": 52,
+      "53": 53
+    }
+  },
+  "chunks": {
+    "byName": {
+      "vendors~main": 0,
+      "main": 1
+    },
+    "bySource": {},
+    "usedIds": [
+      0,
+      1
+    ]
+  },
+  "extract-text-webpack-plugin node_modules/extract-text-webpack-plugin/dist node_modules/css-loader/index.js??ref--5-2!node_modules/postcss-loader/lib/index.js??ref--5-3!node_modules/sass-loader/lib/loader.js!src/styles/pages/home.scss": [
+    {
+      "modules": {
+        "byIdentifier": {
+          "node_modules/css-loader/lib/css-base.js": 0,
+          "node_modules/css-loader/index.js??ref--5-2!node_modules/postcss-loader/lib/index.js??ref--5-3!node_modules/sass-loader/lib/loader.js!src/styles/pages/home.scss": 1
+        },
+        "usedIds": {
+          "0": 0,
+          "1": 1
+        }
+      },
+      "chunks": {
+        "byName": {},
+        "bySource": {},
+        "usedIds": [
+          0
+        ]
+      }
+    }
+  ]
+}

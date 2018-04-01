@@ -26,7 +26,7 @@ export async function statics(ctx, next) {
     try {
       const root = ctx.path.startsWith('/assets')
         ? `${process.cwd()}/static`
-        : `${process.cwd()}/public`;
+        : `${process.cwd()}/dist/public`;
 
       const path = ctx.path.startsWith('/assets')
         ? ctx.path.replace('/assets', '')

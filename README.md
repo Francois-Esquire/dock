@@ -4,10 +4,11 @@
 
 **Features**
 
-* [x] Hot Reload For Server & Client (React)
-* [x] Test Driven Development Ready
-* [x] Preconfigured ESlint, Prettier, and build chain.
-* [x] Both /public and /dist are deployment targets for easy distribution.
+* [x] Hot reload for server & client using Koa, React, CSS, SCSS (modules).
+* [x] Component development experience enhanced by react-cosmos.
+* [x] Preconfigured ESlint, Stylelint, Prettier, and build chain.
+* [x] Simple testing set up using Ava and ready for articulation.
+* [x] Deployment target /dist ready on install.
 
 ### Getting Started
 
@@ -21,5 +22,26 @@ To run the server:
 
 ```bash
   npm start
-  # or npm run dev
+
+  # or:
+
+  # npm run dev
+
+  # to run the hot server.
 ```
+
+To run tests:
+
+```bash
+  npm test
+
+  # or:
+
+  # npm test:watch
+
+  # to watch for file change.
+```
+
+### Requires
+
+* Node ^7.6.0 - for async/await.

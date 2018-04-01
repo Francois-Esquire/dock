@@ -1,16 +1,16 @@
 'use strict';
 
+var KoaRouter = require('koa-router');
+var koaSend = require('koa-send');
+var μs = require('microseconds');
 var Koa = require('koa');
 var koaHelmet = require('koa-helmet');
 var koaSession = require('koa-session');
 var koaUserAgent = require('koa-useragent');
 var koaCompress = require('koa-compress');
 var koaCors = require('@koa/cors');
-var KoaRouter = require('koa-router');
-var koaSend = require('koa-send');
-var μs = require('microseconds');
 
-var api = new KoaRouter({ prefix: '/api' });
+const api = new KoaRouter({ prefix: '/api' });
 
 async function API(ctx) {
   ctx.status = 200;
@@ -21,18 +21,18 @@ api.get(/\/*/, API);
 
 // will be replaced during build by 'const render = require('./www');'
 // otherwise working for tests.
-var render = require('./www');
+const render = require('./www');
 
 async function html(ctx) {
   // eslint-disable-next-line no-underscore-dangle
-  var _html = await render(ctx);
+  const _html = await render(ctx);
 
   ctx.body = _html;
   ctx.status = 200;
   ctx.set('Content-Type', 'text/html');
 }
 
-var router = new KoaRouter();
+const router = new KoaRouter();
 
 router
   .use(api.allowedMethods())
@@ -45,39 +45,39 @@ async function catcher(ctx, next) {
   } catch (e) {
     ctx.throw(
       500,
-      ("There was an error. Please try again later.\n\n" + (e.message)),
+      `There was an error. Please try again later.\n\n${e.message}`,
       ctx
     );
   }
 }
 
 async function responseTime(ctx, next) {
-  var start = μs.now();
+  const start = μs.now();
   await next();
-  var end = μs.parse(μs.since(start));
-  var total = end.microseconds + end.milliseconds * 1e3 + end.seconds * 1e6;
-  ctx.set('Response-Time', ((total / 1e3) + "ms"));
+  const end = μs.parse(μs.since(start));
+  const total = end.microseconds + end.milliseconds * 1e3 + end.seconds * 1e6;
+  ctx.set('Response-Time', `${total / 1e3}ms`);
 }
 
 async function statics(ctx, next) {
   if (/\.(ico|png|jpg|jpeg|svg|css|js|json)$/.test(ctx.path)) {
     try {
-      var root = ctx.path.startsWith('/assets')
-        ? ((process.cwd()) + "/static")
-        : ((process.cwd()) + "/public");
+      const root = ctx.path.startsWith('/assets')
+        ? `${process.cwd()}/static`
+        : `${process.cwd()}/dist/public`;
 
-      var path = ctx.path.startsWith('/assets')
+      const path = ctx.path.startsWith('/assets')
         ? ctx.path.replace('/assets', '')
         : ctx.path;
 
-      await koaSend(ctx, path, { root: root });
+      await koaSend(ctx, path, { root });
     } catch (e) {
       /**/
     }
   } else { await next(); }
 }
 
-var app = new Koa();
+const app = new Koa();
 
 app
   .use(catcher)
@@ -98,7 +98,6 @@ app
         httpOnly: true,
         signed: true,
         key: '$$',
-        // domain: `.${domain}`,
       },
       app
     )

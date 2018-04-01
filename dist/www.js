@@ -3,98 +3,53 @@
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
 var React = _interopDefault(require('react'));
-var server = require('react-dom/server');
-var reactRouterDom = require('react-router-dom');
 var PropTypes = _interopDefault(require('prop-types'));
+var reactRouterDom = require('react-router-dom');
+var stream = _interopDefault(require('stream'));
+var server = require('react-dom/server');
 
-function Button(ref) {
-  var children = ref.children;
-  var rest = {}; for (var n in ref) if(["children"].indexOf(n) === -1) rest[n] = ref[n];
-  var props = rest;
+var styles = {"article":"article___home","header":"header___home","h1":"h1___home","span":"span___home","img":"img___home","footer":"footer___home","button":"button___home"};
 
-  return React.createElement( 'button', props, children);
+var styles$1 = {"button":"button___button"};
+
+function Button({ className, children, ...props }) {
+  return (
+    React.createElement( 'button', Object.assign({},
+      { type: "button", className: [styles$1.button]
+        .concat(className || [])
+        .join(' ')
+        .trim() }, props),
+      children
+    )
+  );
 }
 
 Button.propTypes = {
+  className: PropTypes.string,
   children: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
 };
 
 Button.defaultProps = {
+  className: '',
   children: 'button',
-};
-
-const styles = {
-  article: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    display: 'flex',
-    flexFlow: 'column',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    overflow: 'scroll',
-    fontFamily: 'futura',
-  },
-  header: {
-    zIndex: 2,
-    minHeight: '400px',
-    padding: '4em',
-  },
-  h1: {
-    textAlign: 'center',
-    fontSize: '2em',
-    color: '#fff',
-  },
-  span: {
-    padding: '1em',
-  },
-  img: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    width: '100vw',
-    zIndex: 1,
-    overflow: 'scroll',
-  },
-  footer: {
-    display: 'flex',
-    flexFlow: 'row',
-    justifyContent: 'center',
-    zIndex: 2,
-    padding: '2em',
-  },
-  button: {
-    fontFamily: 'futura',
-    fontSize: '3em',
-    background: 'none',
-    color: '#fff',
-    backgroundColor: 'transparent',
-    border: '2px solid #fff',
-    borderRadius: 4,
-    margin: 'auto',
-    padding: '2em',
-  },
 };
 
 function Home() {
   return (
-    React.createElement( 'article', { style: styles.article },
-      React.createElement( 'header', { style: styles.header },
-        React.createElement( 'h1', { style: styles.h1 },
-          React.createElement( 'span', { style: styles.span }, "Find Your Obsession"),
+    React.createElement( 'article', { className: styles.article },
+      React.createElement( 'header', { className: styles.header },
+        React.createElement( 'h1', { className: styles.h1 },
+          React.createElement( 'span', { className: styles.span }, "Find Your Obsession"),
           React.createElement( 'br', null ),
-          React.createElement( 'span', { style: styles.span }, "Discover Your Passion")
+          React.createElement( 'span', { className: styles.span }, "Discover Your Passion")
         )
       ),
 
       React.createElement( 'img', {
-        style: styles.img, src: "assets/simone-hutsch-scrape.jpg", alt: "blue skies" }),
+        className: styles.img, src: "/assets/simone-hutsch-scrape.jpg", alt: "blue skies" }),
 
-      React.createElement( 'footer', { style: styles.footer },
-        React.createElement( Button, { style: styles.button }, "Explore Now")
+      React.createElement( 'footer', { className: styles.footer },
+        React.createElement( Button, { className: styles.button }, "Explore Now")
       )
     )
   );
@@ -110,12 +65,24 @@ function Application() {
   );
 }
 
-const App = reactRouterDom.withRouter(Application);
+// eslint-disable-next-line import/no-mutable-exports
+let App = reactRouterDom.withRouter(Application);
+
+if (process.env.NODE_ENV !== 'production') {
+  // eslint-disable-next-line global-require, import/no-extraneous-dependencies
+  const { hot } = require('react-hot-loader');
+
+  App = hot(module)(App);
+}
+
+var Application$1 = App;
+
+const debug = process.env.NODE_ENV !== 'production';
 
 async function render(ctx) {
   const app = (
     React.createElement( reactRouterDom.StaticRouter, { location: ctx.path, context: ctx },
-      React.createElement( App, null )
+      React.createElement( Application$1, null )
     )
   );
 
@@ -126,19 +93,30 @@ async function render(ctx) {
         React.createElement( 'meta', { httpEquiv: "X-UA-Compatible", content: "IE=edge" }),
         React.createElement( 'meta', { httpEquiv: "Content-Language", content: "en" }),
         React.createElement( 'meta', { name: "viewport", content: "width=device-width, initial-scale=1" }),
-        React.createElement( 'title', null, "Shiva" )
+        React.createElement( 'title', null, "Discovery" )
+
+        /* css */,
+        debug ? null : React.createElement( 'link', { rel: "stylesheet", href: "/css/main.css" })
       ),
       React.createElement( 'body', null,
-        React.createElement( 'div', {
-          id: "app", dangerouslySetInnerHTML: { __html: server.renderToString(app) } }),
-        React.createElement( 'script', { src: "/js/manifest.js" }),
-        React.createElement( 'script', { src: "/js/vendor.js" }),
-        React.createElement( 'script', { src: "/js/main.js" })
+        React.createElement( 'div', { id: "app" }, app)
+
+        /* js */,
+        React.createElement( 'script', { type: "text/javascript", src: "/js/vendors~main.js" }),
+        React.createElement( 'script', { type: "text/javascript", src: "/js/main.js" })
       )
     )
   );
 
-  const body = `<!DOCTYPE html>${server.renderToStaticMarkup(html)}`;
+  const body = new stream.Transform({
+    transform(chunk, encoding, callback) {
+      callback(undefined, chunk);
+    },
+  });
+
+  body.write('<!DOCTYPE html>');
+
+  server.renderToNodeStream(html).pipe(body);
 
   return body;
 }

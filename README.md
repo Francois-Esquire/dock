@@ -8,7 +8,7 @@
 * [x] Component development experience enhanced by react-cosmos.
 * [x] Simple testing set up using Ava and ready for articulation.
 * [x] Preconfigured ESlint, Stylelint, Prettier ready out of the box.
-* [x] Deployment artifact /dist ready on install.
+* [x] Deployment artifact /dist ready on install (**don't forget to "npm install" beforehand**).
 
 ### Quick Start
 

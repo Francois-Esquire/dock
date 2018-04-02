@@ -7,7 +7,7 @@ const BrotliCompressionPlugin = require('brotli-webpack-plugin');
 const Visualizer = require('webpack-visualizer-plugin');
 
 const debug = process.env.NODE_ENV !== 'production';
-const devtool = debug ? 'cheap-module-eval-source-map' : 'source-map';
+const devtool = debug ? 'inline-cheap-module-source-map' : 'hidden-source-map';
 
 // TODO:
 // create a configuration file to feed webpack config based on env.

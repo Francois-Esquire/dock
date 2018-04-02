@@ -29,10 +29,11 @@ module.exports = function postcssConfig(ctx) {
     );
   }
 
-  if (debug) {
+  if (debug === false) {
     plugins.push(
       cssNano({
         autoprefixer: false,
+        mergeIdents: true,
       }),
     );
   }

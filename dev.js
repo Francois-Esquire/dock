@@ -19,7 +19,7 @@ const domain = `localhost:${port}`;
 const host = `http://${domain}`;
 
 // TODO:
-// - capture arguments to configure debug/run
+// - capture arguments to modify debug/run configuration.
 // - set up redis for session / cache (rendered html, assets)
 
 const debug = {
@@ -115,17 +115,23 @@ async function setupWebpackMiddleware(_server) {
   const publicPath = (webpackConfig[0].output.publicPath = `${host}/`);
   const compiler = webpack(webpackConfig);
 
+  const noinfo = false;
+  const quiet = false;
+  const stats = {
+    colors: true,
+    moduleTrace: true,
+    warnings: true,
+  };
+
   const dev = {
+    noinfo,
+    quiet,
+    stats,
     publicPath,
     lazy: false,
-    serverSideRender: true,
-    noinfo: false,
-    quiet: false,
+    serverSideRender: false,
     watchOptions: {
       aggregateTimeout: 500,
-    },
-    stats: {
-      colors: true,
     },
   };
 

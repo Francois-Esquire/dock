@@ -3,7 +3,7 @@ import React from 'react';
 import { renderToNodeStream } from 'react-dom/server';
 import { StaticRouter } from 'react-router-dom';
 
-import Application from './Application';
+import Application from '../components/Application';
 
 export default async function render(ctx) {
   const app = (
@@ -19,17 +19,17 @@ export default async function render(ctx) {
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
         <meta httpEquiv="Content-Language" content="en" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>Discovery</title>
+        <title>Discover Your Passion</title>
 
         {/* css */}
-        {global.webpack ? null : <link rel="stylesheet" href="/css/main.css" />}
+        {global.webpack ? null : <link rel="stylesheet" href="css/main.css" />}
       </head>
       <body>
         <div id="app">{app}</div>
 
         {/* js */}
-        <script type="text/javascript" src="/js/vendors~main.js" />
-        <script type="text/javascript" src="/js/main.js" />
+        <script type="text/javascript" src="js/vendors~main.js" />
+        <script type="text/javascript" src="js/main.js" />
       </body>
     </html>
   );

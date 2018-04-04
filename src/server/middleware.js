@@ -24,13 +24,9 @@ export async function responseTime(ctx, next) {
 export async function statics(ctx, next) {
   if (/\.(ico|png|jpg|jpeg|svg|css|js|json)$/.test(ctx.path)) {
     try {
-      const root = ctx.path.startsWith('/assets')
-        ? `${process.cwd()}/static`
-        : `${process.cwd()}/dist/public`;
+      const root = `${process.cwd()}/dist/public`;
 
-      const path = ctx.path.startsWith('/assets')
-        ? ctx.path.replace('/assets', '')
-        : ctx.path;
+      const { path } = ctx;
 
       await koaSend(ctx, path, { root });
     } catch (e) {

@@ -1,10 +1,31 @@
 {
-  "extract-text-webpack-plugin node_modules/extract-text-webpack-plugin/dist node_modules/css-loader/index.js??ref--5-2!node_modules/postcss-loader/lib/index.js??ref--5-3!node_modules/sass-loader/lib/loader.js!src/styles/home.scss": [
+  "extract-text-webpack-plugin node_modules/extract-text-webpack-plugin/dist node_modules/css-loader/index.js??ref--5-2!node_modules/postcss-loader/lib/index.js??ref--5-3!node_modules/sass-loader/lib/loader.js!src/styles/main.scss": [
     {
       "modules": {
         "byIdentifier": {
           "node_modules/css-loader/lib/css-base.js": 0,
-          "node_modules/css-loader/index.js??ref--5-2!node_modules/postcss-loader/lib/index.js??ref--5-3!node_modules/sass-loader/lib/loader.js!src/styles/home.scss": 1
+          "node_modules/css-loader/index.js??ref--5-2!node_modules/postcss-loader/lib/index.js??ref--5-3!node_modules/sass-loader/lib/loader.js!src/styles/main.scss": 1
+        },
+        "usedIds": {
+          "0": 0,
+          "1": 1
+        }
+      },
+      "chunks": {
+        "byName": {},
+        "bySource": {},
+        "usedIds": [
+          0
+        ]
+      }
+    }
+  ],
+  "extract-text-webpack-plugin node_modules/extract-text-webpack-plugin/dist node_modules/css-loader/index.js??ref--5-2!node_modules/postcss-loader/lib/index.js??ref--5-3!node_modules/sass-loader/lib/loader.js!src/styles/pages/home.scss": [
+    {
+      "modules": {
+        "byIdentifier": {
+          "node_modules/css-loader/lib/css-base.js": 0,
+          "node_modules/css-loader/index.js??ref--5-2!node_modules/postcss-loader/lib/index.js??ref--5-3!node_modules/sass-loader/lib/loader.js!src/styles/pages/home.scss": 1
         },
         "usedIds": {
           "0": 0,
@@ -36,7 +57,7 @@
         "byName": {},
         "bySource": {},
         "usedIds": [
-          1
+          0
         ]
       }
     }
@@ -48,7 +69,7 @@
       "node_modules/warning/browser.js": 2,
       "node_modules/invariant/browser.js": 3,
       "node_modules/history/PathUtils.js": 4,
-      "node_modules/extract-text-webpack-plugin/dist/loader.js??ref--5-0!node_modules/style-loader/index.js!node_modules/css-loader/index.js??ref--5-2!node_modules/postcss-loader/lib/index.js??ref--5-3!node_modules/sass-loader/lib/loader.js!src/styles/home.scss": 5,
+      "node_modules/extract-text-webpack-plugin/dist/loader.js??ref--5-0!node_modules/style-loader/index.js!node_modules/css-loader/index.js??ref--5-2!node_modules/postcss-loader/lib/index.js??ref--5-3!node_modules/sass-loader/lib/loader.js!src/styles/pages/home.scss": 5,
       "node_modules/react-router-dom/es/index.js 4c0cac3f4e7cff4416755f23ef34380d": 6,
       "node_modules/history/createTransitionManager.js": 7,
       "node_modules/history/LocationUtils.js": 8,
@@ -84,21 +105,23 @@
       "node_modules/core-js/modules/$.property-desc.js": 38,
       "node_modules/core-js/modules/$.export.js": 39,
       "node_modules/core-js/modules/es6.object.assign.js": 40,
-      "node_modules/isarray/index.js": 41,
-      "node_modules/prop-types/lib/ReactPropTypesSecret.js": 42,
-      "node_modules/fbjs/lib/invariant.js": 43,
-      "node_modules/prop-types/factoryWithThrowingShims.js": 44,
-      "node_modules/fbjs/lib/isNode.js": 45,
-      "node_modules/fbjs/lib/isTextNode.js": 46,
-      "node_modules/fbjs/lib/containsNode.js": 47,
-      "node_modules/fbjs/lib/shallowEqual.js": 48,
-      "node_modules/fbjs/lib/getActiveElement.js": 49,
-      "node_modules/fbjs/lib/ExecutionEnvironment.js": 50,
-      "node_modules/react-dom/cjs/react-dom.production.min.js": 51,
-      "node_modules/react/cjs/react.production.min.js": 52,
-      "multi src/www/main.jsx": 53,
-      "node_modules/extract-text-webpack-plugin/dist/loader.js??ref--5-0!node_modules/style-loader/index.js!node_modules/css-loader/index.js??ref--5-2!node_modules/postcss-loader/lib/index.js??ref--5-3!node_modules/sass-loader/lib/loader.js!src/styles/pages/home.scss": 5,
-      "node_modules/extract-text-webpack-plugin/dist/loader.js??ref--5-0!node_modules/style-loader/index.js!node_modules/css-loader/index.js??ref--5-2!node_modules/postcss-loader/lib/index.js??ref--5-3!node_modules/sass-loader/lib/loader.js!src/styles/main.scss": 54
+      "node_modules/extract-text-webpack-plugin/dist/loader.js??ref--5-0!node_modules/style-loader/index.js!node_modules/css-loader/index.js??ref--5-2!node_modules/postcss-loader/lib/index.js??ref--5-3!node_modules/sass-loader/lib/loader.js!src/styles/main.scss": 41,
+      "node_modules/isarray/index.js": 42,
+      "node_modules/prop-types/lib/ReactPropTypesSecret.js": 43,
+      "node_modules/fbjs/lib/invariant.js": 44,
+      "node_modules/prop-types/factoryWithThrowingShims.js": 45,
+      "node_modules/fbjs/lib/isNode.js": 46,
+      "node_modules/fbjs/lib/isTextNode.js": 47,
+      "node_modules/fbjs/lib/containsNode.js": 48,
+      "node_modules/fbjs/lib/shallowEqual.js": 49,
+      "node_modules/fbjs/lib/getActiveElement.js": 50,
+      "node_modules/fbjs/lib/ExecutionEnvironment.js": 51,
+      "node_modules/react-dom/cjs/react-dom.production.min.js": 52,
+      "node_modules/react/cjs/react.production.min.js": 53,
+      "multi src/www/main.jsx": 54,
+      "node_modules/url-loader/dist/cjs.js??ref--6-0!static/simone-hutsch-scrape.jpg": 55,
+      "node_modules/extract-text-webpack-plugin/dist/loader.js??ref--5-0!node_modules/style-loader/index.js!node_modules/css-loader/index.js??ref--5-2!node_modules/postcss-loader/lib/index.js??ref--5-3!node_modules/sass-loader/lib/loader.js!src/styles/app.scss": 27,
+      "node_modules/babel-loader/lib/index.js!src/www/main.jsx b5718486fa0938165d464ac0df81433d": 41
     },
     "usedIds": {
       "0": 0,
@@ -155,7 +178,8 @@
       "51": 51,
       "52": 52,
       "53": 53,
-      "54": 54
+      "54": 54,
+      "55": 55
     }
   },
   "chunks": {
@@ -169,33 +193,12 @@
       1
     ]
   },
-  "extract-text-webpack-plugin node_modules/extract-text-webpack-plugin/dist node_modules/css-loader/index.js??ref--5-2!node_modules/postcss-loader/lib/index.js??ref--5-3!node_modules/sass-loader/lib/loader.js!src/styles/pages/home.scss": [
+  "extract-text-webpack-plugin node_modules/extract-text-webpack-plugin/dist node_modules/css-loader/index.js??ref--5-2!node_modules/postcss-loader/lib/index.js??ref--5-3!node_modules/sass-loader/lib/loader.js!src/styles/app.scss": [
     {
       "modules": {
         "byIdentifier": {
           "node_modules/css-loader/lib/css-base.js": 0,
-          "node_modules/css-loader/index.js??ref--5-2!node_modules/postcss-loader/lib/index.js??ref--5-3!node_modules/sass-loader/lib/loader.js!src/styles/pages/home.scss": 1
-        },
-        "usedIds": {
-          "0": 0,
-          "1": 1
-        }
-      },
-      "chunks": {
-        "byName": {},
-        "bySource": {},
-        "usedIds": [
-          0
-        ]
-      }
-    }
-  ],
-  "extract-text-webpack-plugin node_modules/extract-text-webpack-plugin/dist node_modules/css-loader/index.js??ref--5-2!node_modules/postcss-loader/lib/index.js??ref--5-3!node_modules/sass-loader/lib/loader.js!src/styles/main.scss": [
-    {
-      "modules": {
-        "byIdentifier": {
-          "node_modules/css-loader/lib/css-base.js": 0,
-          "node_modules/css-loader/index.js??ref--5-2!node_modules/postcss-loader/lib/index.js??ref--5-3!node_modules/sass-loader/lib/loader.js!src/styles/main.scss": 1
+          "node_modules/css-loader/index.js??ref--5-2!node_modules/postcss-loader/lib/index.js??ref--5-3!node_modules/sass-loader/lib/loader.js!src/styles/app.scss": 1
         },
         "usedIds": {
           "0": 0,

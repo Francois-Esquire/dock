@@ -1,3 +1,5 @@
+import path from 'path';
+
 import buble from 'rollup-plugin-buble';
 import replace from 'rollup-plugin-re';
 import resolve from 'rollup-plugin-node-resolve';
@@ -16,6 +18,27 @@ const watch = {
 };
 
 const extensions = ['.js', '.jsx', '.css', '.scss'];
+
+const [nodeEnv, serverEnv, replaceAssetDir, replaceWWW] = [
+  {
+    test: 'process.env.NODE_ENV',
+    replace: JSON.stringify(process.env.NODE_ENV),
+  },
+  {
+    test: 'process.env.SERVER',
+    replace: JSON.stringify(true),
+  },
+  {
+    /* eslint-disable no-template-curly-in-string */
+    test: '`${process.cwd()}/dist/public`',
+    replace: '`${__dirname}/public`',
+    /* eslint-enable no-template-curly-in-string */
+  },
+  {
+    test: "import render from '../www';",
+    replace: "const render = require('./www');",
+  },
+];
 
 const cssDictionary = {};
 
@@ -44,6 +67,13 @@ const plugins = {
       return code;
     },
   },
+  assetTransform: {
+    transform(code, id) {
+      if (/\.(gif|png|jpg)$/.test(id))
+        return `export default "assets/${path.basename(id)}";`;
+      return code;
+    },
+  },
   buble: buble({
     transforms: {
       letConst: false,
@@ -61,12 +91,10 @@ const plugins = {
   }),
   replace: {
     server: replace({
-      patterns: [
-        {
-          test: "import render from '../www';",
-          replace: "const render = require('./www');",
-        },
-      ],
+      patterns: [nodeEnv, replaceAssetDir, replaceWWW],
+    }),
+    www: replace({
+      patterns: [nodeEnv, serverEnv],
     }),
   },
 };
@@ -80,6 +108,8 @@ const www = {
     format: 'cjs',
   },
   plugins: [
+    plugins.replace.www,
+    plugins.assetTransform,
     plugins.resolve,
     plugins.postcss,
     plugins.postcssTransform,

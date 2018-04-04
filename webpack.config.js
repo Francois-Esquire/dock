@@ -12,7 +12,7 @@ const devtool = debug ? 'inline-cheap-module-source-map' : 'hidden-source-map';
 // TODO:
 // create a configuration file to feed webpack config based on env.
 
-const publicPath = 'http://localhost:3000/';
+const publicPath = 'http://localhost:3000';
 
 const context = process.cwd();
 
@@ -126,7 +126,7 @@ const styles = [
   },
 ];
 
-const [jsx, css] = [
+const [jsx, css, url] = [
   {
     test: /(\.js|\.jsx)$/,
     exclude,
@@ -144,8 +144,22 @@ const [jsx, css] = [
         }),
   },
   /* eslint-enable indent */
+  {
+    test: /\.(png|jpg|gif)$/,
+    use: [
+      {
+        loader: 'url',
+        options: {
+          limit: 16000,
+          fallback: 'file-loader',
+          outputPath: 'assets/',
+          name: '[name].[ext]',
+        },
+      },
+    ],
+  },
 ];
-const rules = [jsx, css];
+const rules = [jsx, css, url];
 
 const www = {
   mode,

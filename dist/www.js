@@ -8,14 +8,16 @@ var reactRouterDom = require('react-router-dom');
 var stream = _interopDefault(require('stream'));
 var server = require('react-dom/server');
 
-var styles = {"article":"article___home","header":"header___home","h1":"h1___home","span":"span___home","img":"img___home","footer":"footer___home","button":"button___home"};
+var styles = {"main":"main___app"};
 
-var styles$1 = {"button":"button___button"};
+var styles$1 = {"article":"article___home","header":"header___home","h1":"h1___home","span":"span___home","img":"img___home","footer":"footer___home","button":"button___home"};
+
+var styles$2 = {"button":"button___button"};
 
 function Button({ className, children, ...props }) {
   return (
     React.createElement( 'button', Object.assign({},
-      { type: "button", className: [styles$1.button]
+      { type: "button", className: [styles$2.button]
         .concat(className || [])
         .join(' ')
         .trim() }, props),
@@ -34,22 +36,23 @@ Button.defaultProps = {
   children: 'button',
 };
 
+var simoneHutschScrape = "assets/simone-hutsch-scrape.jpg";
+
 function Home() {
   return (
-    React.createElement( 'article', { className: styles.article },
-      React.createElement( 'header', { className: styles.header },
-        React.createElement( 'h1', { className: styles.h1 },
-          React.createElement( 'span', { className: styles.span }, "Find Your Obsession"),
+    React.createElement( 'article', { className: styles$1.article },
+      React.createElement( 'header', { className: styles$1.header },
+        React.createElement( 'h1', { className: styles$1.h1 },
+          React.createElement( 'span', { className: styles$1.span }, "Find Your Obsession"),
           React.createElement( 'br', null ),
-          React.createElement( 'span', { className: styles.span }, "Discover Your Passion")
+          React.createElement( 'span', { className: styles$1.span }, "Discover Your Passion")
         )
       ),
 
-      React.createElement( 'img', {
-        className: styles.img, src: "/assets/simone-hutsch-scrape.jpg", alt: "blue skies" }),
+      React.createElement( 'img', { className: styles$1.img, src: simoneHutschScrape, alt: "blue skies" }),
 
-      React.createElement( 'footer', { className: styles.footer },
-        React.createElement( Button, { className: styles.button }, "Explore Now")
+      React.createElement( 'footer', { className: styles$1.footer },
+        React.createElement( Button, { className: styles$1.button }, "Explore Now")
       )
     )
   );
@@ -57,7 +60,7 @@ function Home() {
 
 function Application() {
   return (
-    React.createElement( 'main', null,
+    React.createElement( 'main', { className: styles.main },
       React.createElement( reactRouterDom.Switch, null,
         React.createElement( reactRouterDom.Route, { component: Home })
       )
@@ -68,11 +71,13 @@ function Application() {
 // eslint-disable-next-line import/no-mutable-exports
 let App = reactRouterDom.withRouter(Application);
 
-if (process.env.NODE_ENV !== 'production') {
-  // eslint-disable-next-line global-require, import/no-extraneous-dependencies
-  const { hot } = require('react-hot-loader');
+{
+  if (true === undefined) {
+    // eslint-disable-next-line global-require, import/no-extraneous-dependencies
+    const { hot } = require('react-hot-loader');
 
-  App = hot(module)(App);
+    App = hot(module)(App);
+  }
 }
 
 var Application$1 = App;
@@ -91,17 +96,17 @@ async function render(ctx) {
         React.createElement( 'meta', { httpEquiv: "X-UA-Compatible", content: "IE=edge" }),
         React.createElement( 'meta', { httpEquiv: "Content-Language", content: "en" }),
         React.createElement( 'meta', { name: "viewport", content: "width=device-width, initial-scale=1" }),
-        React.createElement( 'title', null, "Discovery" )
+        React.createElement( 'title', null, "Discover Your Passion" )
 
         /* css */,
-        global.webpack ? null : React.createElement( 'link', { rel: "stylesheet", href: "/css/main.css" })
+        global.webpack ? null : React.createElement( 'link', { rel: "stylesheet", href: "css/main.css" })
       ),
       React.createElement( 'body', null,
         React.createElement( 'div', { id: "app" }, app)
 
         /* js */,
-        React.createElement( 'script', { type: "text/javascript", src: "/js/vendors~main.js" }),
-        React.createElement( 'script', { type: "text/javascript", src: "/js/main.js" })
+        React.createElement( 'script', { type: "text/javascript", src: "js/vendors~main.js" }),
+        React.createElement( 'script', { type: "text/javascript", src: "js/main.js" })
       )
     )
   );

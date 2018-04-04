@@ -1,11 +1,13 @@
 import React from 'react';
 import { withRouter, Switch, Route } from 'react-router-dom';
 
-import Home from '../components/pages/Home';
+import styles from '../styles/app.scss';
+
+import Home from './pages/Home';
 
 function Application() {
   return (
-    <main>
+    <main className={styles.main}>
       <Switch>
         <Route component={Home} />
       </Switch>
@@ -17,10 +19,12 @@ function Application() {
 let App = withRouter(Application);
 
 if (process.env.NODE_ENV !== 'production') {
-  // eslint-disable-next-line global-require, import/no-extraneous-dependencies
-  const { hot } = require('react-hot-loader');
+  if (process.env.SERVER === undefined) {
+    // eslint-disable-next-line global-require, import/no-extraneous-dependencies
+    const { hot } = require('react-hot-loader');
 
-  App = hot(module)(App);
+    App = hot(module)(App);
+  }
 }
 
 export default App;

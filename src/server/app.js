@@ -36,8 +36,8 @@ app
   )
   .use(koaCompress());
 
-if (global.webpack) {
-  app.use(global.webpack);
+if (process.env.NODE_ENV !== 'production') {
+  if (global.webpack) app.use(global.webpack);
 }
 
 app

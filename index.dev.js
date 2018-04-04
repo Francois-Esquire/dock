@@ -77,9 +77,9 @@ async function serve() {
   server.listen(port, async error => {
     if (error) throw error;
 
-    if (run.watcher) await setupWatcher({ debug: true });
-
     if (run.webpack) await setupWebpackMiddleware(server);
+
+    if (run.watcher) await setupWatcher({ debug: true });
 
     if (debug.koa) process.env.DEBUG = 'koa*';
 

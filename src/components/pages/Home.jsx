@@ -4,6 +4,8 @@ import styles from '../../styles/pages/home.scss';
 
 import Button from '../primitives/Button';
 
+import simoneHutschScrape from '../../../static/simone-hutsch-scrape.jpg';
+
 export default function Home() {
   return (
     <article className={styles.article}>
@@ -15,11 +17,7 @@ export default function Home() {
         </h1>
       </header>
 
-      <img
-        className={styles.img}
-        src="/assets/simone-hutsch-scrape.jpg"
-        alt="blue skies"
-      />
+      <img className={styles.img} src={simoneHutschScrape} alt="blue skies" />
 
       <footer className={styles.footer}>
         <Button className={styles.button}>Explore Now</Button>

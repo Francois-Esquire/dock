@@ -12,11 +12,9 @@ const webpack = require('webpack');
 const koaWebpack = require('koa-webpack');
 const webpackConfig = require('./webpack.config');
 
-const cwd = process.cwd();
+const { port, host } = require('./config');
 
-const port = process.env.PORT || (process.env.PORT = 3000);
-const domain = `localhost:${port}`;
-const host = `http://${domain}`;
+const cwd = process.cwd();
 
 // TODO:
 // - capture arguments to modify debug/run configuration.
@@ -40,6 +38,10 @@ let callback = (req, res) => res.end('Initializing. Please wait.');
 
 async function serve() {
   try {
+    if (global.webpack)
+      global.webpack.client.wss.broadcast(
+        JSON.stringify({ type: 'server::update' }),
+      );
     // eslint-disable-next-line global-require
     app = require('./dist/app');
 
@@ -77,9 +79,9 @@ async function serve() {
   server.listen(port, async error => {
     if (error) throw error;
 
-    if (run.webpack) await setupWebpackMiddleware(server);
+    if (run.watcher) await setupWatcher();
 
-    if (run.watcher) await setupWatcher({ debug: true });
+    if (run.webpack) await setupWebpackMiddleware(server);
 
     if (debug.koa) process.env.DEBUG = 'koa*';
 
@@ -95,7 +97,7 @@ async function setupWatcher() {
   await new Promise(resolve => {
     watcher.on('ready', () => {
       watcher.on('change', path => {
-        console.log('change in path', path);
+        console.log('\t\x1b[36m%s\x1b[0m', `change in path: ${path}`);
 
         if (path !== 'dist/app.js') delete require.cache[`${cwd}/dist/app.js`];
 
@@ -148,5 +150,14 @@ async function setupWebpackMiddleware(_server) {
 
   if (global.webpack === undefined) global.webpack = koaWebpackMiddleware;
 
-  return koaWebpackMiddleware;
+  let initialized = false;
+
+  return new Promise(resolve => {
+    koaWebpackMiddleware.dev.waitUntilValid(() => {
+      if (initialized === false) {
+        resolve(koaWebpackMiddleware);
+        initialized = true;
+      }
+    });
+  });
 }

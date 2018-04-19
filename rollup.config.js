@@ -7,6 +7,8 @@ import postCSS from 'rollup-plugin-postcss';
 
 import pkg from './package.json';
 
+const config = require('./config');
+
 const external = Object.keys(pkg.dependencies)
   .concat(Object.keys(pkg.devDependencies))
   .concat('react-dom/server', 'stream');
@@ -43,6 +45,20 @@ const [nodeEnv, serverEnv, replaceAssetDir, replaceWWW] = [
 const cssDictionary = {};
 
 const plugins = {
+  assetTransform: {
+    transform(code, id) {
+      if (/\.(gif|png|jpg)$/.test(id))
+        return `export default "${config.host}/assets/${path.basename(id)}";`;
+      return code;
+    },
+  },
+  postcssTransform: {
+    transform(code, id) {
+      if (/\.(css|s[ac]ss)$/.test(id))
+        return `export default ${JSON.stringify(cssDictionary[id])};`;
+      return code;
+    },
+  },
   resolve: resolve({
     extensions,
     modulesOnly: true,
@@ -60,20 +76,6 @@ const plugins = {
     exec: true,
     getExportNamed: true,
   }),
-  postcssTransform: {
-    transform(code, id) {
-      if (/\.(css|s[ac]ss)$/.test(id))
-        return `export default ${JSON.stringify(cssDictionary[id])};`;
-      return code;
-    },
-  },
-  assetTransform: {
-    transform(code, id) {
-      if (/\.(gif|png|jpg)$/.test(id))
-        return `export default "assets/${path.basename(id)}";`;
-      return code;
-    },
-  },
   buble: buble({
     transforms: {
       letConst: false,

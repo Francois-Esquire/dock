@@ -6,13 +6,12 @@ const GzipCompressionPlugin = require('compression-webpack-plugin');
 const BrotliCompressionPlugin = require('brotli-webpack-plugin');
 const Visualizer = require('webpack-visualizer-plugin');
 
+const config = require('./config');
+
 const debug = process.env.NODE_ENV !== 'production';
 const devtool = debug ? 'inline-cheap-module-source-map' : 'hidden-source-map';
 
-// TODO:
-// create a configuration file to feed webpack config based on env.
-
-const publicPath = 'http://localhost:3000';
+const publicPath = config.host;
 
 const context = process.cwd();
 
@@ -70,6 +69,9 @@ const optimization = {
 const plugins = [
   new webpack.DefinePlugin({
     'process.env.NODE_ENV': JSON.stringify(mode),
+  }),
+  new webpack.DefinePlugin({
+    'process.env.SERVER': JSON.stringify(false),
   }),
   new Visualizer({
     filename: './statistics.html',
@@ -176,7 +178,7 @@ const www = {
   module: {
     rules,
   },
-  recordsPath: path.resolve(__dirname, 'records.json'),
+  recordsPath: path.resolve(context, 'records.json'),
 };
 
 module.exports = [www];

@@ -1,7 +1,6 @@
 import test from 'ava';
 import stream from 'stream';
 import request from 'supertest';
-import { log } from 'util';
 
 import app from '../src/server/app';
 import render from '../src/www';
@@ -13,9 +12,7 @@ test('App: headers', async t => {
 
   const { headers } = response;
 
-  log(headers);
-
-  t.pass();
+  t.is(headers['content-type'], 'text/html');
 });
 
 test('App: route /*', async t => {
@@ -33,11 +30,11 @@ test('App: route /*', async t => {
     });
 
     readable.on('data', d => {
-      bufs.push(d);
+      bufs.push(d.toString());
     });
 
     readable.on('end', () => {
-      resolve(bufs.reduce((mkp, next) => mkp + next.toString(), ''));
+      resolve(bufs.reduce((mkp, next) => mkp + next, ''));
     });
 
     html.pipe(readable);

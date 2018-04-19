@@ -36,7 +36,7 @@ Button.defaultProps = {
   children: 'button',
 };
 
-var simoneHutschScrape = "assets/simone-hutsch-scrape.jpg";
+var simoneHutschScrape = "http://localhost:3000/assets/simone-hutsch-scrape.jpg";
 
 function Home() {
   return (
@@ -70,15 +70,6 @@ function Application() {
 
 // eslint-disable-next-line import/no-mutable-exports
 let App = reactRouterDom.withRouter(Application);
-
-{
-  if (true === undefined) {
-    // eslint-disable-next-line global-require, import/no-extraneous-dependencies
-    const { hot } = require('react-hot-loader');
-
-    App = hot(module)(App);
-  }
-}
 
 var Application$1 = App;
 

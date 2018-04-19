@@ -1,6 +1,5 @@
 /* eslint
-    import/no-extraneous-dependencies: 0,
-    global-require: 0
+    import/no-extraneous-dependencies: 0
 */
 
 const cssModules = require('postcss-modules');
@@ -12,7 +11,7 @@ const scss = require('postcss-scss');
 module.exports = function postcssConfig(ctx) {
   const debug = ctx.env !== 'production';
 
-  const map = debug ? true : { inline: false };
+  const map = debug || { inline: false };
 
   const cssDict = ctx.options.modules;
 

@@ -1,0 +1,59 @@
+.article {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-flow: column;
+  justify-content: space-between;
+  align-items: center;
+  overflow: scroll;
+  font-family: futura, sans-serif;
+}
+
+.header {
+  z-index: 2;
+  min-height: 400px;
+  padding: 4em;
+}
+
+.h1 {
+  text-align: center;
+  font-size: 2em;
+  color: #fff;
+}
+
+.span {
+  padding: 1em;
+}
+
+.img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100vw;
+  z-index: 1;
+  overflow: scroll;
+}
+
+.footer {
+  display: flex;
+  flex-flow: row;
+  justify-content: center;
+  z-index: 2;
+  padding: 2em;
+}
+
+.button {
+  font-family: futura, sans-serif;
+  font-size: 3em;
+  background: none;
+  color: #fff;
+  background-color: transparent;
+  border: 2px solid #fff;
+  border-radius: 4;
+  margin: auto;
+  padding: 2em;
+}

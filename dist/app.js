@@ -11,29 +11,20 @@ var koaCompress = require('koa-compress');
 var koaCors = require('@koa/cors');
 
 const api = new KoaRouter({ prefix: '/api' });
-
 async function API(ctx) {
   ctx.status = 200;
   ctx.body = 'welcome to the api';
 }
-
 api.get(/\/*/, API);
 
-// will be replaced during build by 'const render = require('./www');'
-// otherwise working for tests.
 const render = require('./www');
-
 async function html(ctx) {
-  // eslint-disable-next-line no-underscore-dangle
   const _html = await render(ctx);
-
   ctx.body = _html;
   ctx.status = 200;
   ctx.set('Content-Type', 'text/html');
 }
-
 const router = new KoaRouter();
-
 router
   .use(api.allowedMethods())
   .use(api.routes())
@@ -50,7 +41,6 @@ async function catcher(ctx, next) {
     );
   }
 }
-
 async function responseTime(ctx, next) {
   const start = μs.now();
   await next();
@@ -58,23 +48,18 @@ async function responseTime(ctx, next) {
   const total = end.microseconds + end.milliseconds * 1e3 + end.seconds * 1e6;
   ctx.set('Response-Time', `${total / 1e3}ms`);
 }
-
 async function statics(ctx, next) {
   if (/\.(ico|png|jpg|jpeg|svg|css|js|json)$/.test(ctx.path)) {
     try {
       const root = `${__dirname}/public`;
-
       const { path } = ctx;
-
       await koaSend(ctx, path, { root });
     } catch (e) {
-      /**/
     }
   } else { await next(); }
 }
 
 const app = new Koa();
-
 app
   .use(catcher)
   .use(responseTime)
@@ -99,11 +84,9 @@ app
     )
   )
   .use(koaCompress());
-
 {
   if (global.webpack) { app.use(global.webpack); }
 }
-
 app
   .use(statics)
   .use(router.allowedMethods())

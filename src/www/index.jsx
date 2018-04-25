@@ -22,7 +22,9 @@ export default async function render(ctx) {
         <title>Discover Your Passion</title>
 
         {/* css */}
-        {global.webpack ? null : <link rel="stylesheet" href="css/main.css" />}
+        {process.env.NODE_ENV === 'production' ? (
+          <link rel="stylesheet" href="css/main.css" />
+        ) : null}
       </head>
       <body>
         <div id="app">{app}</div>

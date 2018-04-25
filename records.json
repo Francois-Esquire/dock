@@ -121,7 +121,10 @@
       "multi src/www/main.jsx": 54,
       "node_modules/url-loader/dist/cjs.js??ref--6-0!static/simone-hutsch-scrape.jpg": 55,
       "node_modules/extract-text-webpack-plugin/dist/loader.js??ref--5-0!node_modules/style-loader/index.js!node_modules/css-loader/index.js??ref--5-2!node_modules/postcss-loader/lib/index.js??ref--5-3!node_modules/sass-loader/lib/loader.js!src/styles/app.scss": 27,
-      "node_modules/babel-loader/lib/index.js!src/www/main.jsx b5718486fa0938165d464ac0df81433d": 41
+      "node_modules/babel-loader/lib/index.js!src/www/main.jsx b5718486fa0938165d464ac0df81433d": 41,
+      "node_modules/extract-text-webpack-plugin/dist/loader.js??ref--5-0!node_modules/style-loader/index.js!node_modules/css-loader/index.js??ref--5-2!node_modules/postcss-loader/lib/index.js??ref--5-3!node_modules/sass-loader/lib/loader.js!src/components/styles/pages/home.scss": 5,
+      "node_modules/extract-text-webpack-plugin/dist/loader.js??ref--5-0!node_modules/style-loader/index.js!node_modules/css-loader/index.js??ref--5-2!node_modules/postcss-loader/lib/index.js??ref--5-3!node_modules/sass-loader/lib/loader.js!src/components/styles/primitives/button.scss": 20,
+      "node_modules/extract-text-webpack-plugin/dist/loader.js??ref--5-0!node_modules/style-loader/index.js!node_modules/css-loader/index.js??ref--5-2!node_modules/postcss-loader/lib/index.js??ref--5-3!node_modules/sass-loader/lib/loader.js!src/components/styles/app.scss": 27
     },
     "usedIds": {
       "0": 0,
@@ -210,6 +213,69 @@
         "bySource": {},
         "usedIds": [
           0
+        ]
+      }
+    }
+  ],
+  "extract-text-webpack-plugin node_modules/extract-text-webpack-plugin/dist node_modules/css-loader/index.js??ref--5-2!node_modules/postcss-loader/lib/index.js??ref--5-3!node_modules/sass-loader/lib/loader.js!src/components/styles/app.scss": [
+    {
+      "modules": {
+        "byIdentifier": {
+          "node_modules/css-loader/lib/css-base.js": 0,
+          "node_modules/css-loader/index.js??ref--5-2!node_modules/postcss-loader/lib/index.js??ref--5-3!node_modules/sass-loader/lib/loader.js!src/components/styles/app.scss": 1
+        },
+        "usedIds": {
+          "0": 0,
+          "1": 1
+        }
+      },
+      "chunks": {
+        "byName": {},
+        "bySource": {},
+        "usedIds": [
+          1
+        ]
+      }
+    }
+  ],
+  "extract-text-webpack-plugin node_modules/extract-text-webpack-plugin/dist node_modules/css-loader/index.js??ref--5-2!node_modules/postcss-loader/lib/index.js??ref--5-3!node_modules/sass-loader/lib/loader.js!src/components/styles/pages/home.scss": [
+    {
+      "modules": {
+        "byIdentifier": {
+          "node_modules/css-loader/lib/css-base.js": 0,
+          "node_modules/css-loader/index.js??ref--5-2!node_modules/postcss-loader/lib/index.js??ref--5-3!node_modules/sass-loader/lib/loader.js!src/components/styles/pages/home.scss": 1
+        },
+        "usedIds": {
+          "0": 0,
+          "1": 1
+        }
+      },
+      "chunks": {
+        "byName": {},
+        "bySource": {},
+        "usedIds": [
+          1
+        ]
+      }
+    }
+  ],
+  "extract-text-webpack-plugin node_modules/extract-text-webpack-plugin/dist node_modules/css-loader/index.js??ref--5-2!node_modules/postcss-loader/lib/index.js??ref--5-3!node_modules/sass-loader/lib/loader.js!src/components/styles/primitives/button.scss": [
+    {
+      "modules": {
+        "byIdentifier": {
+          "node_modules/css-loader/lib/css-base.js": 0,
+          "node_modules/css-loader/index.js??ref--5-2!node_modules/postcss-loader/lib/index.js??ref--5-3!node_modules/sass-loader/lib/loader.js!src/components/styles/primitives/button.scss": 1
+        },
+        "usedIds": {
+          "0": 0,
+          "1": 1
+        }
+      },
+      "chunks": {
+        "byName": {},
+        "bySource": {},
+        "usedIds": [
+          1
         ]
       }
     }

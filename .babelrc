@@ -1,23 +1,25 @@
 {
   "plugins": ["@babel/plugin-proposal-object-rest-spread"],
-  "presets": [
-    "@babel/preset-react",
-    [
-      "@babel/preset-env",
-      {
-        "forceAllTransforms": false,
-        "useBuiltIns": "usage",
-        "spec": true,
-        "modules": false,
-        "targets": {
-          "browsers": "last 2 versions"
-        }
-      }
-    ]
-  ],
   "env": {
     "development": {
+      "plugins": ["react-hot-loader/babel"],
       "presets": [["@babel/preset-react", { "development": true }]]
+    },
+    "production": {
+      "presets": [
+        "@babel/preset-react",
+        [
+          "@babel/preset-env",
+          {
+            "spec": true,
+            "modules": false,
+            "useBuiltIns": "usage",
+            "targets": {
+              "browsers": ["last 2 versions", "safari >= 7", "ie >= 9"]
+            }
+          }
+        ]
+      ]
     }
   }
 }

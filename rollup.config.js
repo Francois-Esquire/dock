@@ -4,6 +4,7 @@ import buble from 'rollup-plugin-buble';
 import replace from 'rollup-plugin-re';
 import resolve from 'rollup-plugin-node-resolve';
 import postCSS from 'rollup-plugin-postcss';
+import cleanup from 'rollup-plugin-cleanup';
 
 import pkg from './package.json';
 
@@ -59,6 +60,7 @@ const plugins = {
       return code;
     },
   },
+  clean: cleanup(),
   resolve: resolve({
     extensions,
     modulesOnly: true,
@@ -83,7 +85,8 @@ const plugins = {
       classes: false,
       modules: false,
       destructuring: false,
-      parameterDestructuring: false,
+      // because cleanup uses acorn - rest syntax unsupported.
+      // parameterDestructuring: false,
       defaultParameter: false,
       conciseMethodProperty: false,
       templateString: false,
@@ -116,6 +119,7 @@ const www = {
     plugins.postcss,
     plugins.postcssTransform,
     plugins.buble,
+    plugins.clean,
   ],
 };
 
@@ -128,7 +132,12 @@ const server = {
     file: 'dist/app.js',
     format: 'cjs',
   },
-  plugins: [plugins.replace.server, plugins.resolve, plugins.buble],
+  plugins: [
+    plugins.replace.server,
+    plugins.resolve,
+    plugins.buble,
+    plugins.clean,
+  ],
 };
 
 module.exports = [server, www];

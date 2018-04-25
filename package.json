@@ -31,9 +31,16 @@
   "ava": {
     "babel": false,
     "compileEnhancements": false,
-    "require": ["esm", "./test/register.js"],
-    "files": ["test/**/*.test.js"],
-    "sources": ["src/**/*.{js,jsx}"]
+    "require": [
+      "esm",
+      "./test/register.js"
+    ],
+    "files": [
+      "test/**/*.test.js"
+    ],
+    "sources": [
+      "src/**/*.{js,jsx}"
+    ]
   },
   "dependencies": {
     "@koa/cors": "^2.2.1",
@@ -51,11 +58,11 @@
     "react-router-dom": "^4.2.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.0.0-beta.44",
-    "@babel/polyfill": "^7.0.0-beta.44",
-    "@babel/preset-env": "^7.0.0-beta.44",
-    "@babel/preset-react": "^7.0.0-beta.44",
-    "@babel/register": "^7.0.0-beta.44",
+    "@babel/core": "^7.0.0-beta.46",
+    "@babel/polyfill": "^7.0.0-beta.46",
+    "@babel/preset-env": "^7.0.0-beta.46",
+    "@babel/preset-react": "^7.0.0-beta.46",
+    "@babel/register": "^7.0.0-beta.46",
     "ava": "^1.0.0-beta.4",
     "babel-eslint": "^8.2.3",
     "babel-loader": "^8.0.0-beta.2",
@@ -69,13 +76,13 @@
     "eslint": "^4.19.1",
     "eslint-config-airbnb": "^16.1.0",
     "eslint-config-prettier": "2.9.0",
-    "eslint-plugin-babel": "^5.0.0",
+    "eslint-plugin-babel": "^5.1.0",
     "eslint-plugin-compat": "^2.2.0",
     "eslint-plugin-import": "^2.11.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-prettier": "2.6.0",
     "eslint-plugin-react": "^7.7.0",
-    "esm": "^3.0.19",
+    "esm": "^3.0.23",
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
     "file-loader": "^1.1.11",
     "html-webpack-plugin": "^3.2.0",
@@ -92,10 +99,11 @@
     "prettier": "^1.12.1",
     "react-cosmos": "^4.0.0-rc.1",
     "react-cosmos-router-proxy": "^4.0.0-rc.1",
-    "react-hot-loader": "^4.1.0",
+    "react-hot-loader": "^4.1.1",
     "rimraf": "^2.6.2",
     "rollup": "^0.58.1",
     "rollup-plugin-buble": "^0.19.2",
+    "rollup-plugin-cleanup": "^2.0.1",
     "rollup-plugin-node-resolve": "^3.3.0",
     "rollup-plugin-postcss": "^1.6.1",
     "rollup-plugin-re": "^1.0.7",
@@ -106,7 +114,7 @@
     "supertest": "^3.0.0",
     "url-loader": "^1.0.1",
     "webpack": "^4.6.0",
-    "webpack-cli": "^2.0.14",
+    "webpack-cli": "^2.0.15",
     "webpack-visualizer-plugin": "^0.1.11"
   },
   "repository": {

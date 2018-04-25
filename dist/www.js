@@ -14,7 +14,12 @@ var styles$1 = {"article":"article___home","header":"header___home","h1":"h1___h
 
 var styles$2 = {"button":"button___button"};
 
-function Button({ className, children, ...props }) {
+function objectWithoutProperties (obj, exclude) { var target = {}; for (var k in obj) if (Object.prototype.hasOwnProperty.call(obj, k) && exclude.indexOf(k) === -1) target[k] = obj[k]; return target; }
+function Button(ref) {
+  var className = ref.className;
+  var children = ref.children;
+  var rest = objectWithoutProperties( ref, ["className", "children"] );
+  var props = rest;
   return (
     React.createElement( 'button', Object.assign({},
       { type: "button", className: [styles$2.button]
@@ -25,12 +30,10 @@ function Button({ className, children, ...props }) {
     )
   );
 }
-
 Button.propTypes = {
   className: PropTypes.string,
   children: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
 };
-
 Button.defaultProps = {
   className: '',
   children: 'button',
@@ -48,9 +51,7 @@ function Home() {
           React.createElement( 'span', { className: styles$1.span }, "Discover Your Passion")
         )
       ),
-
       React.createElement( 'img', { className: styles$1.img, src: simoneHutschScrape, alt: "blue skies" }),
-
       React.createElement( 'footer', { className: styles$1.footer },
         React.createElement( Button, { className: styles$1.button }, "Explore Now")
       )
@@ -67,10 +68,7 @@ function Application() {
     )
   );
 }
-
-// eslint-disable-next-line import/no-mutable-exports
 let App = reactRouterDom.withRouter(Application);
-
 var Application$1 = App;
 
 async function render(ctx) {
@@ -79,7 +77,6 @@ async function render(ctx) {
       React.createElement( Application$1, null )
     )
   );
-
   const html = (
     React.createElement( 'html', { lang: "en-US" },
       React.createElement( 'head', null,
@@ -88,30 +85,24 @@ async function render(ctx) {
         React.createElement( 'meta', { httpEquiv: "Content-Language", content: "en" }),
         React.createElement( 'meta', { name: "viewport", content: "width=device-width, initial-scale=1" }),
         React.createElement( 'title', null, "Discover Your Passion" )
-
-        /* css */,
-        global.webpack ? null : React.createElement( 'link', { rel: "stylesheet", href: "css/main.css" })
+                 ,
+        null
       ),
       React.createElement( 'body', null,
         React.createElement( 'div', { id: "app" }, app)
-
-        /* js */,
+                ,
         React.createElement( 'script', { type: "text/javascript", src: "js/vendors~main.js" }),
         React.createElement( 'script', { type: "text/javascript", src: "js/main.js" })
       )
     )
   );
-
   const body = new stream.Transform({
     transform(chunk, encoding, callback) {
       callback(undefined, chunk);
     },
   });
-
   body.write('<!DOCTYPE html>');
-
   server.renderToNodeStream(html).pipe(body);
-
   return body;
 }
 

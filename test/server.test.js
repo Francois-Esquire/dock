@@ -34,7 +34,7 @@ test('App: route /*', async t => {
     });
 
     readable.on('end', () => {
-      resolve(bufs.reduce((mkp, next) => mkp + next, ''));
+      resolve(bufs.join(''));
     });
 
     html.pipe(readable);

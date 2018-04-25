@@ -63,7 +63,8 @@ const optimization = {
       },
     },
   },
-  minimize: !debug,
+  minimize: false,
+  // minimize: !debug,
 };
 
 const plugins = [

@@ -1,17 +1,17 @@
 FROM node:alpine
 
-ENV NODE_ENV production
-
 EXPOSE 3000
 
-RUN mkdir -p /usr/src/app
+ENV PORT=3000
 
-WORKDIR /usr/src/app
+ENV NODE_ENV=production
 
-COPY ./dist ./
+RUN mkdir -p /mnt/docker/app
+
+WORKDIR /mnt/docker/app
+
+COPY . ./
 
 RUN npm install
-
-USER node
 
 CMD ["npm", "start"]

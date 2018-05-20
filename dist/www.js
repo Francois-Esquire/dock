@@ -39,7 +39,7 @@ Button.defaultProps = {
   children: 'button',
 };
 
-var simoneHutschScrape = "http://localhost:3000/assets/simone-hutsch-scrape.jpg";
+var simoneHutschScrape = "assets/simone-hutsch-scrape.jpg";
 
 function Home() {
   return (
@@ -71,39 +71,65 @@ function Application() {
 let App = reactRouterDom.withRouter(Application);
 var Application$1 = App;
 
-async function render(ctx) {
-  const app = (
-    React.createElement( reactRouterDom.StaticRouter, { location: ctx.path, context: ctx },
-      React.createElement( Application$1, null )
-    )
-  );
-  const html = (
-    React.createElement( 'html', { lang: "en-US" },
-      React.createElement( 'head', null,
-        React.createElement( 'meta', { charSet: "utf-8" }),
-        React.createElement( 'meta', { httpEquiv: "X-UA-Compatible", content: "IE=edge" }),
-        React.createElement( 'meta', { httpEquiv: "Content-Language", content: "en" }),
-        React.createElement( 'meta', { name: "viewport", content: "width=device-width, initial-scale=1" }),
-        React.createElement( 'title', null, "Discover Your Passion" )
-                 ,
-        null
-      ),
-      React.createElement( 'body', null,
-        React.createElement( 'div', { id: "app" }, app)
-                ,
-        React.createElement( 'script', { type: "text/javascript", src: "js/vendors~main.js" }),
-        React.createElement( 'script', { type: "text/javascript", src: "js/main.js" })
+class Markup {
+  error(error, code) {
+    const html = (
+      React.createElement( 'html', { lang: "en-US" },
+        React.createElement( 'head', null,
+          React.createElement( 'meta', { charSet: "utf-8" }),
+          React.createElement( 'meta', { httpEquiv: "Content-Language", content: "en" }),
+          React.createElement( 'meta', { name: "viewport", content: "width=device-width, initial-scale=1" }),
+          React.createElement( 'title', null, "Oops" )
+        ),
+        React.createElement( 'body', null,
+          React.createElement( 'p', null, "We", "'", "re sorry, looks like there was an issue. The correct parties have been notified." )
+        )
       )
-    )
-  );
-  const body = new stream.Transform({
-    transform(chunk, encoding, callback) {
-      callback(undefined, chunk);
-    },
-  });
-  body.write('<!DOCTYPE html>');
-  server.renderToNodeStream(html).pipe(body);
-  return body;
+    );
+    const body = new stream.Transform({
+      transform(chunk, encoding, callback) {
+        callback(undefined, chunk);
+      },
+    });
+    body.write('<!DOCTYPE html>');
+    server.renderToNodeStream(html).pipe(body);
+    return body;
+  }
+  async render(ctx) {
+    const app = (
+      React.createElement( reactRouterDom.StaticRouter, { location: ctx.path, context: ctx },
+        React.createElement( Application$1, null )
+      )
+    );
+    const html = (
+      React.createElement( 'html', { lang: "en-US" },
+        React.createElement( 'head', null,
+          React.createElement( 'meta', { charSet: "utf-8" }),
+          React.createElement( 'meta', { httpEquiv: "X-UA-Compatible", content: "IE=edge" }),
+          React.createElement( 'meta', { httpEquiv: "Content-Language", content: "en" }),
+          React.createElement( 'meta', { name: "viewport", content: "width=device-width, initial-scale=1" }),
+          React.createElement( 'title', null, "Discover Your Passion" )
+                   ,
+          React.createElement( 'link', { rel: "stylesheet", href: "/css/main.css" })
+        ),
+        React.createElement( 'body', null,
+          React.createElement( 'div', { id: "app" }, app)
+                  ,
+          React.createElement( 'script', { type: "text/javascript", src: "/js/vendors~main.js" }),
+          React.createElement( 'script', { type: "text/javascript", src: "/js/main.js" })
+        )
+      )
+    );
+    const body = new stream.Transform({
+      transform(chunk, encoding, callback) {
+        callback(undefined, chunk);
+      },
+    });
+    body.write('<!DOCTYPE html>');
+    server.renderToNodeStream(html).pipe(body);
+    return body;
+  }
 }
+var index = new Markup();
 
-module.exports = render;
+module.exports = index;

@@ -4,15 +4,19 @@ import api from './api';
 
 // will be replaced during build by 'const render = require('./www');'
 // otherwise working for tests.
-import render from '../www';
+import markup from '../www';
 
 async function html(ctx) {
-  // eslint-disable-next-line no-underscore-dangle
-  const _html = await render(ctx);
-
-  ctx.body = _html;
-  ctx.status = 200;
   ctx.set('Content-Type', 'text/html');
+
+  try {
+    ctx.status = 200;
+
+    // eslint-disable-next-line no-underscore-dangle
+    ctx.body = await markup.render(ctx);
+  } catch (e) {
+    ctx.body = markup.error(e, (ctx.status = 500));
+  }
 }
 
 const router = new KoaRouter();

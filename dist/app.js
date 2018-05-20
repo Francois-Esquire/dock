@@ -17,12 +17,15 @@ async function API(ctx) {
 }
 api.get(/\/*/, API);
 
-const render = require('./www');
+const markup = require('./www');
 async function html(ctx) {
-  const _html = await render(ctx);
-  ctx.body = _html;
-  ctx.status = 200;
   ctx.set('Content-Type', 'text/html');
+  try {
+    ctx.status = 200;
+    ctx.body = await markup.render(ctx);
+  } catch (e) {
+    ctx.body = markup.error(e, (ctx.status = 500));
+  }
 }
 const router = new KoaRouter();
 router
@@ -84,9 +87,6 @@ app
     )
   )
   .use(koaCompress());
-{
-  if (global.webpack) { app.use(global.webpack); }
-}
 app
   .use(statics)
   .use(router.allowedMethods())

@@ -12,8 +12,10 @@ const webpack = require('webpack');
 const koaWebpack = require('koa-webpack');
 const webpackConfig = require('./webpack.config');
 
-const { port, host } = require('./config');
-
+const port = process.env.PORT || (process.env.PORT = 3000);
+const host =
+  process.env.ROOT_URL ||
+  (process.env.ROOT_URL = `localhost${port && port !== 80 ? `:${port}` : ''}`);
 const cwd = process.cwd();
 
 // TODO:

@@ -3,7 +3,7 @@ import stream from 'stream';
 import request from 'supertest';
 
 import app from '../src/server/app';
-import render from '../src/www';
+import markup from '../src/www';
 
 const server = app.callback();
 
@@ -19,9 +19,9 @@ test('App: route /*', async t => {
   const path = '/';
 
   const response = await request(server).get(path);
-  const html = await render({ path });
+  const html = await markup.render({ path });
 
-  const markup = await new Promise(resolve => {
+  const _markup = await new Promise(resolve => {
     const bufs = [];
     const readable = new stream.Transform({
       transform(chunk, encoding, callback) {
@@ -44,5 +44,5 @@ test('App: route /*', async t => {
 
   t.is(response.status, 200);
   t.is(response.type, 'text/html');
-  t.is(response.text, markup);
+  t.is(response.text, _markup);
 });

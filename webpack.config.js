@@ -1,17 +1,13 @@
-const path = require('path');
-
 const webpack = require('webpack');
 const ExtractText = require('extract-text-webpack-plugin');
 const GzipCompressionPlugin = require('compression-webpack-plugin');
 const BrotliCompressionPlugin = require('brotli-webpack-plugin');
 const Visualizer = require('webpack-visualizer-plugin');
 
-const config = require('./config');
+const publicPath = process.env.DOMAIN || '/';
 
 const debug = process.env.NODE_ENV !== 'production';
 const devtool = debug ? 'inline-cheap-module-source-map' : 'hidden-source-map';
-
-const publicPath = config.host;
 
 const context = process.cwd();
 
@@ -63,15 +59,12 @@ const optimization = {
       },
     },
   },
-  minimize: false,
-  // minimize: !debug,
+  minimize: !debug,
 };
 
 const plugins = [
   new webpack.DefinePlugin({
     'process.env.NODE_ENV': JSON.stringify(mode),
-  }),
-  new webpack.DefinePlugin({
     'process.env.SERVER': JSON.stringify(false),
   }),
   new Visualizer({
@@ -179,7 +172,6 @@ const www = {
   module: {
     rules,
   },
-  recordsPath: path.resolve(context, 'records.json'),
 };
 
 module.exports = [www];

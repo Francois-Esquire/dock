@@ -1,0 +1,39 @@
+version: '3.6'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: node-app
+    labels:
+      - "traefik.enable=true"
+      - "traefik.backend=app"
+      - "traefik.docker.network=traefik"
+      - "traefik.frontend.rule=Host:localhost"
+      - "traefik.port=3000"
+
+  traefik:
+    image: traefik:1.6
+    command:
+      - "--api"
+      - "--entrypoints=Name:http Address::80 Redirect.EntryPoint:https"
+      - "--entrypoints=Name:https Address::443 TLS"
+      - "--defaultentrypoints=http,https"
+      - "--acme"
+      - "--acme.storage=/var/traefik/acme.json"
+      - "--acme.entryPoint=https"
+      - "--acme.httpChallenge.entryPoint=http"
+      - "--acme.onHostRule=true"
+      - "--acme.onDemand=false"
+      - "--acme.email=inquiry@127.0.0.1.xip.io"
+      - "--docker"
+      - "--docker.domain=127.0.0.1.xip.io"
+      - "--docker.watch"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./acme.json:/var/traefik/acme.json
+    ports:
+      - 80:80
+      - 443:443
+      - 8080:8080

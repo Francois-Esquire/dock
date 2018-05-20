@@ -1,0 +1,44 @@
+---
+root: true
+
+parser: babel-eslint
+
+extends:
+  - plugin:react/recommended
+  - airbnb
+  - prettier
+  - prettier/react
+
+plugins:
+  - react
+  - import
+  - jsx-a11y
+  - compat
+  - prettier
+
+parserOptions:
+  sourceType: module
+  ecmaVersion: 2017
+  ecmaFeatures:
+    jsx: true
+
+env:
+  es6: true
+  node: true
+  browser: true
+
+rules:
+  prettier/prettier: error
+  indent: off
+  no-underscore-dangle: off
+  prefer-arrow-callback: off
+  newline-before-return: error
+  no-use-before-define:
+    - error
+    -
+      functions: false
+      classes: false
+      variables: true
+  no-unused-vars: warn
+  react/no-unused-prop-types: warn
+  react/sort-comp: warn

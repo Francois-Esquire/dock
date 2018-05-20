@@ -1,0 +1,65 @@
+version: '3.6'
+
+networks:
+  webgateway:
+    driver: overlay
+    external: true
+  traefik:
+    driver: overlay
+
+services:
+  app:
+    image: node-app
+    networks:
+      - traefik
+    deploy:
+      replicas: 2
+      restart_policy:
+        condition: on-failure
+      labels:
+        - "traefik.enable=true"
+        - "traefik.backend=app"
+        - "traefik.docker.network=traefik"
+        - "traefik.frontend.rule=Host:localhost"
+        - "traefik.port=3000"
+
+  traefik:
+    image: traefik:1.6
+    command:
+      - "--api"
+      - "--entrypoints=Name:http Address::80 Redirect.EntryPoint:https"
+      - "--entrypoints=Name:https Address::443 TLS"
+      - "--defaultentrypoints=http,https"
+      # - "--acme"
+      # - "--acme.storage=traefik/acme/account"
+      # - "--acme.entryPoint=https"
+      # - "--acme.httpChallenge.entryPoint=http"
+      # - "--acme.onHostRule=true"
+      # - "--acme.onDemand=false"
+      # - "--acme.email=inquiry@localhost.com"
+      - "--docker"
+      - "--docker.swarmMode"
+      - "--docker.domain=localhost"
+      - "--docker.watch"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - webgateway
+      - traefik
+    ports:
+      - target: 80
+        published: 80
+        mode: host
+      - target: 443
+        published: 443
+        mode: host
+    deploy:
+      mode: global
+      placement:
+        constraints:
+          - node.role == manager
+      update_config:
+        parallelism: 1
+        delay: 2s
+      restart_policy:
+        condition: on-failure

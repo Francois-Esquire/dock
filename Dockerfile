@@ -1,8 +1,8 @@
 FROM node:alpine
 
-RUN mkdir -p /home/user/app
+RUN adduser -D app app
 
-WORKDIR /home/user/app
+WORKDIR /home/app
 
 COPY package.json .
 

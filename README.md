@@ -14,6 +14,7 @@ Simple Starter Setup
 
 * [ ] HTTP/2
 * [ ] TLS/SSL ready
+* [ ] Isolated testing environment
 
 Uses Koa, React, SCSS(modules), Rollup and Webpack.
 

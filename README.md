@@ -72,10 +72,10 @@ or, you can run the container yourself.
 
 ```bash
   # build it with a tag
-  docker build -t koa-dock .
+  docker build -t koa-dock . \
 
-  # keep out the -d (detached) if you want to see the logs
   docker container run -d -p 80:3000 --name dock --rm koa-dock
+  # keep out the -d (detached) if you want to see the logs
 ```
 
 To change the node version in your container, open up the Dockerfile and change the default tag
@@ -91,6 +91,14 @@ You can run:
 ```bash
   npm run deploy
 ```
+
+### Ship it out
+
+```bash
+  npm run ship
+```
+
+this will run tests then build and finally deploy your app.
 
 ---
 

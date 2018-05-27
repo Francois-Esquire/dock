@@ -11,6 +11,7 @@
         [
           "@babel/preset-env",
           {
+            "debug": true,
             "spec": true,
             "modules": false,
             "useBuiltIns": "usage",

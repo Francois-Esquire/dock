@@ -10,13 +10,6 @@ var koaUserAgent = require('koa-useragent');
 var koaCompress = require('koa-compress');
 var koaCors = require('@koa/cors');
 
-const api = new KoaRouter({ prefix: '/api' });
-async function API(ctx) {
-  ctx.status = 200;
-  ctx.body = 'welcome to the api';
-}
-api.get(/\/*/, API);
-
 const markup = require('./www');
 async function html(ctx) {
   ctx.set('Content-Type', 'text/html');
@@ -27,11 +20,21 @@ async function html(ctx) {
     ctx.body = markup.error(e, (ctx.status = 500));
   }
 }
+const www = new KoaRouter();
+www.get(/\/*/, html);
+
+const api = new KoaRouter({ prefix: '/api' });
+api.get(/\/*/, async function rest(ctx) {
+  ctx.status = 200;
+  ctx.body = 'welcome to the api endpoint';
+});
+
 const router = new KoaRouter();
 router
   .use(api.allowedMethods())
   .use(api.routes())
-  .get(/\/*/, html);
+  .use(www.allowedMethods())
+  .use(www.routes());
 
 async function catcher(ctx, next) {
   try {

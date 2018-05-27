@@ -1,17 +1,25 @@
-# Koa Forge
+# Koa Dock
 
-### Simple Starter Setup
+Simple Starter Setup
 
 **Features**
 
-* [x] Hot reload for server & client using Koa, React, CSS, SCSS (modules).
-* [x] Component development experience enhanced by react-cosmos.
-* [x] Simple testing set up using Ava and ready for articulation.
-* [x] Preconfigured ESlint, Stylelint, Prettier ready out of the box.
-* [x] Deployment artifact /dist ready on install (**don't forget to "npm install" beforehand**).
-* [x] Containerized via Docker, with brief lifecycle method on command (**make sure you have Docker installed**).
+* [x] Build out using future Javascript with the latest Node.js and esm module
+* [x] ESlint, Stylelint, Prettier ready out of the box
+* [x] Hot loading server & client
+* [x] Test concurrently using Ava
+* [x] Docker primed
 
-### Quick Start
+**Roadmap**
+
+* [ ] HTTP/2
+* [ ] TLS/SSL ready
+
+Uses Koa, React, SCSS(modules), Rollup and Webpack.
+
+---
+
+## Quick Start
 
 To run the server:
 
@@ -20,17 +28,29 @@ To run the server:
 
   # or:
 
-  # npm run dev
+  npm run dev
 
-  # to run the hot server.
+  # to run the hot loading.
 ```
 
----
+### Local Development
 
-To build for deployment:
+To build for production:
 
 ```bash
   npm run build
+```
+
+To run tests locally:
+
+```bash
+  npm test
+
+  # or:
+
+  npm run test-watch
+
+  # to watch for file change.
 ```
 
 To run cosmos for component development:
@@ -39,46 +59,45 @@ To run cosmos for component development:
   npm run cosmos
 ```
 
-To run tests:
+### With Docker
+
+To get started, run:
 
 ```bash
-  npm test
-
-  # or:
-
-  # npm test:watch
-
-  # to watch for file change.
+  # in repo or reference the docker-compose.yml with -c
+  docker-compose up --build
 ```
 
----
-
-To run the Docker container:
-
-Step 1: start with building the image:
+or, you can run the container yourself.
 
 ```bash
-  npm run container:build
+  # build it with a tag
+  docker build -t koa-dock .
+
+  # keep out the -d (detached) if you want to see the logs
+  docker container run -d -p 80:3000 --name dock --rm koa-dock
 ```
 
-Step 2: then you can start it with:
+To change the node version in your container, open up the Dockerfile and change the default tag
 
 ```bash
-  npm run container:run
+  FROM node:alpine # to node:10.1-alpine
 ```
 
-**alternatively, you can just run 'npm run container' to do both of the steps listed above**
+#### Deploying your Container
 
-Step 3: to stop the container:
+You can run:
 
 ```bash
-  npm run container:stop
+  npm run deploy
 ```
 
 ---
 
 ### Requires
 
-* Node >=7.6.0 - for async/await support.
-* Docker - to run as container.
-* A proper IDE setup - to take advantage of ESLint, Stylelint and Prettier.
+* Node >=7.6.0 - for native async/await support primarily.
+
+#### Optional Enhancements
+
+* A properly setup IDE - to take advantage of ESLint, Stylelint and Prettier.

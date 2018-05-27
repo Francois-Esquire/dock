@@ -1,7 +1,5 @@
 import KoaRouter from 'koa-router';
 
-import api from './api';
-
 // will be replaced during build by 'const render = require('./www');'
 // otherwise working for tests.
 import markup from '../www';
@@ -19,11 +17,8 @@ async function html(ctx) {
   }
 }
 
-const router = new KoaRouter();
+const www = new KoaRouter();
 
-router
-  .use(api.allowedMethods())
-  .use(api.routes())
-  .get(/\/*/, html);
+www.get(/\/*/, html);
 
-export default router;
+export default www;

@@ -1,18 +1,11 @@
-node_modules/
 scripts/
-src/
 static/
-test/
+**/node_modules
+**/src
+**/test
 
-.git
-.vscode
-.babelrc
-.eslintignore
-.eslintrc
-.gitignore
-.prettierignore
-.prettierrc
-.stylelintignore
-.stylelintrc
+.*
+**.config.js
+**.dev.js
 
 README.md

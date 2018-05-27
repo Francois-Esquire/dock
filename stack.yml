@@ -9,7 +9,7 @@ networks:
 
 services:
   app:
-    image: node-app
+    image: koa-dock
     networks:
       - traefik
     deploy:
@@ -30,13 +30,14 @@ services:
       - "--entrypoints=Name:http Address::80 Redirect.EntryPoint:https"
       - "--entrypoints=Name:https Address::443 TLS"
       - "--defaultentrypoints=http,https"
+      # WHEN YOU'RE READY TO DEPLOY
       # - "--acme"
       # - "--acme.storage=traefik/acme/account"
       # - "--acme.entryPoint=https"
       # - "--acme.httpChallenge.entryPoint=http"
       # - "--acme.onHostRule=true"
       # - "--acme.onDemand=false"
-      # - "--acme.email=inquiry@localhost.com"
+      # - "--acme.email=inquiry@localhost"
       - "--docker"
       - "--docker.swarmMode"
       - "--docker.domain=localhost"

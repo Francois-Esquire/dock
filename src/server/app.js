@@ -5,7 +5,7 @@ import koaUserAgent from 'koa-useragent';
 import koaCompress from 'koa-compress';
 import koaCors from '@koa/cors';
 
-import www from './www';
+import router from './routes';
 
 import { catcher, responseTime, statics } from './middleware';
 
@@ -42,7 +42,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 app
   .use(statics)
-  .use(www.allowedMethods())
-  .use(www.routes());
+  .use(router.allowedMethods())
+  .use(router.routes());
 
 export default app;

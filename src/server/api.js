@@ -2,11 +2,9 @@ import KoaRouter from 'koa-router';
 
 const api = new KoaRouter({ prefix: '/api' });
 
-async function API(ctx) {
+api.get(/\/*/, async function rest(ctx) {
   ctx.status = 200;
-  ctx.body = 'welcome to the api';
-}
-
-api.get(/\/*/, API);
+  ctx.body = 'welcome to the api endpoint';
+});
 
 export default api;

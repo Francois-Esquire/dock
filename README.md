@@ -4,11 +4,11 @@ Simple Starter Setup
 
 **Features**
 
-* [x] Build out using future Javascript with the latest Node.js and esm module
-* [x] ESlint, Stylelint, Prettier ready out of the box
-* [x] Hot loading server & client
-* [x] Test concurrently using Ava
-* [x] Docker primed
+* Build out using future Javascript with the latest Node.js and esm module
+* ESlint, Stylelint, Prettier ready out of the box
+* Hot loading server & client
+* Test concurrently using Ava
+* Docker primed
 
 **Roadmap**
 

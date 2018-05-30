@@ -4,11 +4,10 @@ try {
   // eslint-disable-next-line global-require
   const app = require('./dist/app');
 
-  app.listen(port);
+  // eslint-disable-next-line no-console
+  app.listen(port, () => console.log('server is listening on %s', port));
 } catch (e) {
-  if (e.code === 'MODULE_NOT_FOUND')
-    console.log(
-      'please make sure to run "npm install & npm run build" before you begin.\n',
-    );
-  else throw e;
+  // TODO:
+  // proper and informative error reporting
+  throw e;
 }

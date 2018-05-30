@@ -1,14 +1,14 @@
 version: '3.6'
 
 networks:
-  webgateway:
+  gateway:
     driver: overlay
     external: true
   traefik:
     driver: overlay
 
 services:
-  app:
+  web:
     image: koa-dock
     networks:
       - traefik
@@ -18,7 +18,7 @@ services:
         condition: on-failure
       labels:
         - "traefik.enable=true"
-        - "traefik.backend=app"
+        - "traefik.backend=web"
         - "traefik.docker.network=traefik"
         - "traefik.frontend.rule=Host:localhost"
         - "traefik.port=3000"
@@ -32,11 +32,10 @@ services:
       - "--defaultentrypoints=http,https"
       # WHEN YOU'RE READY TO DEPLOY
       # - "--acme"
-      # - "--acme.storage=traefik/acme/account"
+      # - "--acme.storage=acme.json"
       # - "--acme.entryPoint=https"
       # - "--acme.httpChallenge.entryPoint=http"
       # - "--acme.onHostRule=true"
-      # - "--acme.onDemand=false"
       # - "--acme.email=inquiry@localhost"
       - "--docker"
       - "--docker.swarmMode"
@@ -44,8 +43,9 @@ services:
       - "--docker.watch"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+      - /opt/traefik/acme.json:/acme.json
     networks:
-      - webgateway
+      - gateway
       - traefik
     ports:
       - target: 80

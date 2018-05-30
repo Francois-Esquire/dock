@@ -1,15 +1,15 @@
 version: '3.6'
 
 services:
-  koa:
+  web:
     build:
       context: .
       dockerfile: Dockerfile
     image: koa-dock
-    container_name: koa
+    container_name: web
     labels:
       - "traefik.enable=true"
-      - "traefik.backend=koa"
+      - "traefik.backend=web"
       - "traefik.frontend.rule=Host:localhost"
       - "traefik.port=3000"
 

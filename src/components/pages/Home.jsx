@@ -1,6 +1,6 @@
 import React from 'react';
 
-import styles from '../styles/pages/home.scss';
+import styles from './styles/home.scss';
 
 import Button from '../primitives/Button';
 

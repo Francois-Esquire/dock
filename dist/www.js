@@ -39,7 +39,7 @@ Button.defaultProps = {
   children: 'button',
 };
 
-var simoneHutschScrape = "assets/simone-hutsch-scrape.jpg";
+var simoneHutschScrape = "/assets/simone-hutsch-scrape.jpg";
 
 function Home() {
   return (
@@ -59,17 +59,28 @@ function Home() {
   );
 }
 
-function Application() {
+function Router() {
   return (
-    React.createElement( 'main', { className: styles.main },
-      React.createElement( reactRouterDom.Switch, null,
-        React.createElement( reactRouterDom.Route, { component: Home })
-      )
+    React.createElement( reactRouterDom.Switch, null,
+      React.createElement( reactRouterDom.Route, { component: Home })
     )
   );
 }
-let App = reactRouterDom.withRouter(Application);
-var Application$1 = App;
+const Root = reactRouterDom.withRouter(Router);
+
+class Application extends React.PureComponent {
+  componentDidCatch(error, errorInfo) {
+    console.log(error, errorInfo);
+  }
+  render() {
+    return (
+      React.createElement( 'main', { className: styles.main },
+        React.createElement( Root, null )
+      )
+    );
+  }
+}
+var Application$1 = Application;
 
 class Markup {
   error(error, code) {

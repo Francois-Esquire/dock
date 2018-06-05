@@ -1,17 +1,16 @@
 const webpack = require('webpack');
-const ExtractText = require('extract-text-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const GzipCompressionPlugin = require('compression-webpack-plugin');
 const BrotliCompressionPlugin = require('brotli-webpack-plugin');
 const Visualizer = require('webpack-visualizer-plugin');
 
-const publicPath = process.env.DOMAIN || '/';
-
-const debug = process.env.NODE_ENV !== 'production';
-const devtool = debug ? 'inline-cheap-module-source-map' : 'hidden-source-map';
-
 const context = process.cwd();
+const debug = process.env.NODE_ENV !== 'production';
+const publicPath = `${process.env.DOMAIN || ''}/`;
 
 const mode = debug ? 'development' : 'production';
+const devtool = debug ? 'inline-cheap-module-source-map' : 'hidden-source-map';
+
 const name = 'www';
 const target = 'web';
 
@@ -68,7 +67,7 @@ const plugins = [
     'process.env.SERVER': JSON.stringify(false),
   }),
   new Visualizer({
-    filename: './statistics.html',
+    filename: 'statistics.html',
   }),
 ];
 
@@ -78,10 +77,8 @@ if (debug === false) {
   const minRatio = 0.8;
 
   plugins.push(
-    new ExtractText({
+    new MiniCssExtractPlugin({
       filename: 'css/[name].css',
-      allChunks: true,
-      ignoreOrder: true,
     }),
     new GzipCompressionPlugin({
       asset: '[path].gz[query]',
@@ -134,10 +131,7 @@ const [jsx, css, url] = [
     exclude,
     use: debug
       ? ['style'].concat(styles)
-      : ExtractText.extract({
-          use: styles,
-          fallback: 'style',
-        }),
+      : [MiniCssExtractPlugin.loader].concat(styles),
   },
   /* eslint-enable indent */
   {

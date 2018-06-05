@@ -2,19 +2,17 @@
   eslint
     import/no-extraneous-dependencies: 0,
     no-use-before-define: 0,
-    no-multi-assign: 0
+    no-multi-assign: 0,
+    global-require: 0,
 */
 
 const { spawn } = require('child_process');
 const http = require('http');
-const chokidar = require('chokidar');
-const webpack = require('webpack');
-const koaWebpack = require('koa-webpack');
-const webpackConfig = require('./webpack.config');
 
-const port = process.env.PORT || (process.env.PORT = 3000);
-const host = process.env.ROOT_URL || (process.env.ROOT_URL = 'localhost');
-const url = `${host}${port && port !== 80 ? `:${port}` : ''}`;
+const { PORT = 3000 } = process.env;
+
+const port = PORT;
+
 const cwd = process.cwd();
 
 // TODO:
@@ -34,17 +32,20 @@ const run = {
   redis: !true,
 };
 
+let wp = null;
 let app = null;
 let callback = (req, res) => res.end('Initializing. Please wait.');
 
 async function serve() {
   try {
-    if (global.webpack)
-      global.webpack.client.wss.broadcast(
-        JSON.stringify({ type: 'server::update' }),
-      );
-    // eslint-disable-next-line global-require
     app = require('./dist/app');
+
+    if (wp) {
+      wp.client.wss.broadcast(JSON.stringify({ type: 'server::update' }));
+
+      // insert before static middleware
+      app.middleware.splice(-3, 0, wp);
+    }
 
     callback = app.callback();
   } catch (e) {
@@ -56,20 +57,6 @@ async function serve() {
   let redis;
   let rollup;
 
-  if (run.redis) {
-    redis = spawn('redis-server', {
-      stdio: debug.redis ? 'inherit' : null,
-    });
-  }
-
-  if (run.rollup) {
-    rollup = spawn('rollup', ['-c', '-w'], {
-      cwd,
-      env: process.env,
-      stdio: [null, null, debug.rollup ? process.stdin : null],
-    });
-  }
-
   process.on('close', () => {
     if (redis) redis.kill();
     if (rollup) rollup.kill();
@@ -80,17 +67,33 @@ async function serve() {
   server.listen(port, async error => {
     if (error) throw error;
 
+    if (debug.koa) process.env.DEBUG = 'koa*';
+
+    if (run.redis) {
+      redis = spawn('redis-server', {
+        stdio: debug.redis ? 'inherit' : null,
+      });
+    }
+
+    if (run.rollup) {
+      rollup = spawn('rollup', ['-c', '-w'], {
+        cwd,
+        env: process.env,
+        stdio: [null, null, debug.rollup ? process.stdin : null],
+      });
+    }
+
     if (run.watcher) await setupWatcher();
 
     if (run.webpack) await setupWebpackMiddleware(server);
-
-    if (debug.koa) process.env.DEBUG = 'koa*';
 
     serve();
   });
 })();
 
 async function setupWatcher() {
+  const chokidar = require('chokidar');
+
   const watcher = chokidar.watch(['dist/*.js'], {
     cwd,
   });
@@ -114,8 +117,12 @@ async function setupWatcher() {
   return watcher;
 }
 
-async function setupWebpackMiddleware(_server) {
-  const publicPath = (webpackConfig[0].output.publicPath = `${url}/`);
+async function setupWebpackMiddleware(server) {
+  const webpack = require('webpack');
+  const koaWebpack = require('koa-webpack');
+  const webpackConfig = require('./webpack.config');
+
+  // const publicPath = (webpackConfig[0].output.publicPath = `${url}/`);
   const compiler = webpack(webpackConfig);
 
   const noinfo = false;
@@ -130,7 +137,7 @@ async function setupWebpackMiddleware(_server) {
     noinfo,
     quiet,
     stats,
-    publicPath,
+    publicPath: '/',
     lazy: false,
     serverSideRender: false,
     watchOptions: {
@@ -140,8 +147,8 @@ async function setupWebpackMiddleware(_server) {
 
   const hot = {};
 
-  if (_server) hot.server = _server;
-  else hot.port = process.env.PORT;
+  if (server) hot.server = server;
+  else hot.port = port;
 
   const koaWebpackMiddleware = koaWebpack({
     compiler,
@@ -149,7 +156,7 @@ async function setupWebpackMiddleware(_server) {
     hot,
   });
 
-  if (global.webpack === undefined) global.webpack = koaWebpackMiddleware;
+  wp = koaWebpackMiddleware;
 
   let initialized = false;
 

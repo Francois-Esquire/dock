@@ -20,7 +20,7 @@ const watch = {
 
 const extensions = ['.js', '.jsx', '.css', '.scss'];
 
-const [nodeEnv, serverEnv, replaceAssetDir, replaceWWW] = [
+const [nodeEnv, serverEnv, replaceWWW] = [
   {
     test: 'process.env.NODE_ENV',
     replace: JSON.stringify(process.env.NODE_ENV),
@@ -30,13 +30,7 @@ const [nodeEnv, serverEnv, replaceAssetDir, replaceWWW] = [
     replace: JSON.stringify(true),
   },
   {
-    /* eslint-disable no-template-curly-in-string */
-    test: '`${process.cwd()}/dist/public`',
-    replace: '`${__dirname}/public`',
-    /* eslint-enable no-template-curly-in-string */
-  },
-  {
-    test: "import markup from '../www';",
+    test: "import markup from '../../www';",
     replace: "const markup = require('./www');",
   },
 ];
@@ -47,7 +41,7 @@ const plugins = {
   assetTransform: {
     transform(code, id) {
       if (/\.(gif|png|jpg)$/.test(id))
-        return `export default "assets/${path.basename(id)}";`;
+        return `export default "/assets/${path.basename(id)}";`;
 
       return code;
     },
@@ -96,7 +90,7 @@ const plugins = {
   }),
   replace: {
     server: replace({
-      patterns: [nodeEnv, replaceAssetDir, replaceWWW],
+      patterns: [nodeEnv, replaceWWW],
     }),
     www: replace({
       patterns: [nodeEnv, serverEnv],

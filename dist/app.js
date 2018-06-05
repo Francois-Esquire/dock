@@ -1,8 +1,8 @@
 'use strict';
 
 var KoaRouter = require('koa-router');
-var koaSend = require('koa-send');
 var μs = require('microseconds');
+var koaSend = require('koa-send');
 var Koa = require('koa');
 var koaHelmet = require('koa-helmet');
 var koaSession = require('koa-session');
@@ -31,10 +31,10 @@ api.get(/\/*/, async function rest(ctx) {
 
 const router = new KoaRouter();
 router
-  .use(api.allowedMethods())
   .use(api.routes())
-  .use(www.allowedMethods())
-  .use(www.routes());
+  .use(api.allowedMethods())
+  .use(www.routes())
+  .use(www.allowedMethods());
 
 async function catcher(ctx, next) {
   try {
@@ -47,6 +47,7 @@ async function catcher(ctx, next) {
     );
   }
 }
+
 async function responseTime(ctx, next) {
   const start = μs.now();
   await next();
@@ -54,11 +55,11 @@ async function responseTime(ctx, next) {
   const total = end.microseconds + end.milliseconds * 1e3 + end.seconds * 1e6;
   ctx.set('Response-Time', `${total / 1e3}ms`);
 }
+
 async function statics(ctx, next) {
   if (/\.(ico|png|jpg|jpeg|svg|css|js|json)$/.test(ctx.path)) {
     try {
-      const root = `${__dirname}/public`;
-      const { path } = ctx;
+      const { path, root } = ctx;
       await koaSend(ctx, path, { root });
     } catch (e) {
     }
@@ -66,6 +67,7 @@ async function statics(ctx, next) {
 }
 
 const app = new Koa();
+app.context.root = `${__dirname}/public`;
 app
   .use(catcher)
   .use(responseTime)
@@ -89,8 +91,7 @@ app
       app
     )
   )
-  .use(koaCompress());
-app
+  .use(koaCompress())
   .use(statics)
   .use(router.allowedMethods())
   .use(router.routes());

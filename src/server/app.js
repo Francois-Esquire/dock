@@ -11,6 +11,8 @@ import { catcher, responseTime, statics } from './middleware';
 
 const app = new Koa();
 
+app.context.root = `${__dirname}/public`;
+
 app
   .use(catcher)
   .use(responseTime)
@@ -34,13 +36,7 @@ app
       app,
     ),
   )
-  .use(koaCompress());
-
-if (process.env.NODE_ENV !== 'production') {
-  if (global.webpack) app.use(global.webpack);
-}
-
-app
+  .use(koaCompress())
   .use(statics)
   .use(router.allowedMethods())
   .use(router.routes());

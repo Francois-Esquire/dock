@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import styles from '../styles/primitives/button.scss';
+import styles from './styles/button.scss';
 
 export default function Button({ className, children, ...props }) {
   return (

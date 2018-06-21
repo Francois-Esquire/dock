@@ -32,6 +32,7 @@ rules:
   indent: off
   no-underscore-dangle: off
   prefer-arrow-callback: off
+  jsx-a11y/anchor-is-valid: off
   newline-before-return: error
   no-use-before-define:
     - error

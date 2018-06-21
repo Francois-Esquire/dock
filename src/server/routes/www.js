@@ -8,9 +8,6 @@ async function html(ctx) {
   ctx.set('Content-Type', 'text/html');
 
   try {
-    ctx.status = 200;
-
-    // eslint-disable-next-line no-underscore-dangle
     ctx.body = await markup.render(ctx);
   } catch (e) {
     ctx.body = markup.error(e, (ctx.status = 500));
@@ -19,6 +16,6 @@ async function html(ctx) {
 
 const www = new KoaRouter();
 
-www.get(/\/*/, html);
+www.get('/*', html);
 
 export default www;

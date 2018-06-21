@@ -59,12 +59,35 @@ function Home() {
   );
 }
 
-function Router() {
+var styles$3 = {"notfound":"notfound___404"};
+
+function NotFound(props) {
+  if (props.staticContext) { props.staticContext.status = 404; }
   return (
-    React.createElement( reactRouterDom.Switch, null,
-      React.createElement( reactRouterDom.Route, { component: Home })
+    React.createElement( 'section', { className: styles$3.notfound },
+      React.createElement( 'header', null,
+        React.createElement( 'h1', null, "Sorry" )
+      ),
+      React.createElement( 'p', null, "Looks like we couldn", "'", "t find what you were looking for." ),
+      React.createElement( 'footer', null,
+        React.createElement( reactRouterDom.Link, { to: "/" }, "Go Back Home")
+      )
     )
   );
+}
+
+class Router extends React.PureComponent {
+  componentDidCatch(error, errorInfo) {
+    console.log(error, errorInfo);
+  }
+  render() {
+    return (
+      React.createElement( reactRouterDom.Switch, null,
+        React.createElement( reactRouterDom.Route, { exact: true, path: "/", component: Home }),
+        React.createElement( reactRouterDom.Route, { component: NotFound })
+      )
+    );
+  }
 }
 const Root = reactRouterDom.withRouter(Router);
 
@@ -83,6 +106,18 @@ class Application extends React.PureComponent {
 var Application$1 = Application;
 
 class Markup {
+  constructor() {
+    this.createStream = this.createStream.bind(this);
+  }
+  createStream() {
+    const body = new stream.Transform({
+      transform(chunk, encoding, callback) {
+        callback(undefined, chunk);
+      },
+    });
+    body.write('<!DOCTYPE html>');
+    return body;
+  }
   error(error, code) {
     const html = (
       React.createElement( 'html', { lang: "en-US" },
@@ -90,28 +125,23 @@ class Markup {
           React.createElement( 'meta', { charSet: "utf-8" }),
           React.createElement( 'meta', { httpEquiv: "Content-Language", content: "en" }),
           React.createElement( 'meta', { name: "viewport", content: "width=device-width, initial-scale=1" }),
-          React.createElement( 'title', null, "Oops" )
+          React.createElement( 'title', null, "Oops - ", code )
         ),
         React.createElement( 'body', null,
-          React.createElement( 'p', null, "We", "'", "re sorry, looks like there was an issue. The correct parties have been notified." )
+          React.createElement( 'p', null, "We", "'", "re sorry, looks like there was an issue..." )
         )
       )
     );
-    const body = new stream.Transform({
-      transform(chunk, encoding, callback) {
-        callback(undefined, chunk);
-      },
-    });
-    body.write('<!DOCTYPE html>');
-    server.renderToNodeStream(html).pipe(body);
-    return body;
+    return server.renderToStaticNodeStream(html).pipe(this.createStream());
   }
   async render(ctx) {
-    const app = (
-      React.createElement( reactRouterDom.StaticRouter, { location: ctx.path, context: ctx },
+    const app = server.renderToString(
+      React.createElement( reactRouterDom.StaticRouter, { location: ctx.path, context: (ctx.state = ctx.state || {}) },
         React.createElement( Application$1, null )
       )
     );
+    if (typeof ctx.state.status === 'number') { ctx.status = ctx.state.status; }
+    else { ctx.status = 200; }
     const html = (
       React.createElement( 'html', { lang: "en-US" },
         React.createElement( 'head', null,
@@ -123,22 +153,16 @@ class Markup {
                    ,
           React.createElement( 'link', { rel: "stylesheet", href: "/css/main.css" })
         ),
-        React.createElement( 'body', null,
-          React.createElement( 'div', { id: "app" }, app)
+        React.createElement( 'body', null
+                                                        ,
+          React.createElement( 'div', { id: "app", dangerouslySetInnerHTML: { __html: app } })
                   ,
           React.createElement( 'script', { type: "text/javascript", src: "/js/vendors~main.js" }),
           React.createElement( 'script', { type: "text/javascript", src: "/js/main.js" })
         )
       )
     );
-    const body = new stream.Transform({
-      transform(chunk, encoding, callback) {
-        callback(undefined, chunk);
-      },
-    });
-    body.write('<!DOCTYPE html>');
-    server.renderToNodeStream(html).pipe(body);
-    return body;
+    return server.renderToStaticNodeStream(html).pipe(this.createStream());
   }
 }
 var index = new Markup();

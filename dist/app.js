@@ -14,14 +14,13 @@ const markup = require('./www');
 async function html(ctx) {
   ctx.set('Content-Type', 'text/html');
   try {
-    ctx.status = 200;
     ctx.body = await markup.render(ctx);
   } catch (e) {
     ctx.body = markup.error(e, (ctx.status = 500));
   }
 }
 const www = new KoaRouter();
-www.get(/\/*/, html);
+www.get('/*', html);
 
 const api = new KoaRouter({ prefix: '/api' });
 api.get(/\/*/, async function rest(ctx) {

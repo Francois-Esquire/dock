@@ -118,7 +118,8 @@ class Markup {
     body.write('<!DOCTYPE html>');
     return body;
   }
-  error(error, code) {
+  error(ctx, error, code) {
+    ctx.status = code;
     const html = (
       React.createElement( 'html', { lang: "en-US" },
         React.createElement( 'head', null,
@@ -128,7 +129,8 @@ class Markup {
           React.createElement( 'title', null, "Oops - ", code )
         ),
         React.createElement( 'body', null,
-          React.createElement( 'p', null, "We", "'", "re sorry, looks like there was an issue..." )
+          React.createElement( 'p', null, "We", "'", "re sorry, looks like there was an issue..." ),
+          React.createElement( 'p', null, error.message )
         )
       )
     );

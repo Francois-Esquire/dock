@@ -1,4 +1,5 @@
 const webpack = require('webpack');
+
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const GzipCompressionPlugin = require('compression-webpack-plugin');
 const BrotliCompressionPlugin = require('brotli-webpack-plugin');
@@ -125,7 +126,6 @@ const [jsx, css, url] = [
     exclude,
     use: 'babel',
   },
-  /* eslint-disable indent */
   {
     test: /\.(css|s[ac]ss)$/,
     exclude,
@@ -133,7 +133,6 @@ const [jsx, css, url] = [
       ? ['style'].concat(styles)
       : [MiniCssExtractPlugin.loader].concat(styles),
   },
-  /* eslint-enable indent */
   {
     test: /\.(png|jpg|gif)$/,
     use: [
@@ -149,6 +148,7 @@ const [jsx, css, url] = [
     ],
   },
 ];
+
 const rules = [jsx, css, url];
 
 const www = {

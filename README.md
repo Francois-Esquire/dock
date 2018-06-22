@@ -36,7 +36,7 @@ Uses Koa, React, SCSS(modules), Rollup and Webpack.
 
   Run `npm run cosmos` to start component development at localhost:8989.
 
-  If you are new to `react-cosmos`, please check out the documentation and get yourself familiar with the idea of fixtures.
+  If you are new to [`react-cosmos`](https://github.com/react-cosmos/react-cosmos), please check out the documentation and get yourself familiar with the [idea of fixtures](https://github.com/react-cosmos/react-cosmos#fixtures).
 
 ### With Docker
 
@@ -62,7 +62,9 @@ Uses Koa, React, SCSS(modules), Rollup and Webpack.
 
   You can `npm run deploy` to start building your image and tag it.
 
-  This uses the `"deploy": {...}` configuration in your `package.json`, update it accordingly.
+  The command uses the `"deploy": {...}` configuration in your `package.json`, update it accordingly.
+
+  This is useful if you have a private repository set up, as well as for getting it up on Docker Hub.
 
 - **Ship It Out**
 

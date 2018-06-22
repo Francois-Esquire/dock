@@ -1,24 +1,26 @@
 # Dock
 
-Simple Starter Setup
+Simple Starter Setup Using Node.js, Koa, React, SCSS, Rollup, Webpack and Docker.
 
 **Features**
 
-- Build out using future Javascript with the latest Node.js and esm module
-- ESlint, Stylelint, Prettier ready out of the box
+- Build out using future Javascript with the latest Node.js and [`esm`](https://github.com/standard-things/esm)
+- [`eslint`](https://github.com/eslint/eslint), [`stylelint`](https://github.com/stylelint/stylelint), [`prettier`](https://github.com/prettier/prettier) ready out of the box
+- Test concurrently using [`ava`](https://github.com/avajs/ava)
 - Hot loading server & client
-- Test concurrently using Ava
-- Docker primed
 
 **Roadmap**
 
 - [ ] HTTP/2
 - [ ] TLS/SSL ready
 - [ ] Containerized testing environment
+- [ ] Branch-specific starters for various implementations
 
-Uses Koa, React, SCSS(modules), Rollup and Webpack.
+## Motivation
 
-## Quick Start
+The developer experience is a major concern of mine. The main goal of this repository was to facilitate the process of bootstrapping and setup for immediate quality development.
+
+## Get Started
 
 - **Running The Server**
 
@@ -56,7 +58,9 @@ Uses Koa, React, SCSS(modules), Rollup and Webpack.
     # keep out the -d (detached) if you want to see the logs
   ```
 
-  :bulb: To change the node version in your container, open up the Dockerfile and change `FROM node:alpine # to node:10.1-alpine`, the default tag
+  :bulb: To change the node version in your container, open up the Dockerfile and change
+
+  `FROM node:alpine # to node:10.1-alpine`
 
 - **Deploying The Container**
 

@@ -5,8 +5,12 @@ Simple Starter Setup Using Node.js, Koa, React, SCSS, Rollup, Webpack and Docker
 **Features**
 
 - Build out using future Javascript with the latest Node.js and [`esm`](https://github.com/standard-things/esm)
+- Runs a server application using [`koa`](https://github.com/koajs/koa)
+- Develop your isomorphic application with [`react`](https://github.com/facebook/react) and deliver it with a built-in server-side setup
 - [`eslint`](https://github.com/eslint/eslint), [`stylelint`](https://github.com/stylelint/stylelint), [`prettier`](https://github.com/prettier/prettier) ready out of the box
 - Test concurrently using [`ava`](https://github.com/avajs/ava)
+- Shape react components with focus using [`react-cosmos`](https://github.com/react-cosmos/react-cosmos)
+- Build pipeline with [`webpack`](https://github.com/webpack/webpack) & [`rollup`](https://github.com/rollup/rollup)
 - Hot loading server & client
 
 **Roadmap**

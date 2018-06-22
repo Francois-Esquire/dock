@@ -7,10 +7,10 @@ import Application from '../components/Application';
 
 class Markup {
   constructor() {
-    this.createStream = this.createStream.bind(this);
+    this.createRenderStream = this.createRenderStream.bind(this);
   }
   // eslint-disable-next-line
-  createStream() {
+  createRenderStream(html) {
     const body = new stream.Transform({
       transform(chunk, encoding, callback) {
         callback(undefined, chunk);
@@ -19,7 +19,7 @@ class Markup {
 
     body.write('<!DOCTYPE html>');
 
-    return body;
+    return renderToStaticNodeStream(html).pipe(body);
   }
 
   error(ctx, error, code) {
@@ -41,7 +41,7 @@ class Markup {
       </html>
     );
 
-    return renderToStaticNodeStream(html).pipe(this.createStream());
+    return this.createRenderStream(html);
   }
 
   async render(ctx) {
@@ -79,7 +79,7 @@ class Markup {
       </html>
     );
 
-    return renderToStaticNodeStream(html).pipe(this.createStream());
+    return this.createRenderStream(html);
   }
 }
 

@@ -1,6 +1,6 @@
 # Dock
 
-Simple Starter Setup Using Node.js, Koa, React, SCSS, Rollup, Webpack and Docker.
+Simple Starter Setup Using Node.js and Docker.
 
 **Features**
 

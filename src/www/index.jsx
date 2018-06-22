@@ -22,7 +22,9 @@ class Markup {
     return body;
   }
 
-  error(error, code) {
+  error(ctx, error, code) {
+    ctx.status = code;
+
     const html = (
       <html lang="en-US">
         <head>
@@ -33,6 +35,8 @@ class Markup {
         </head>
         <body>
           <p>We{"'"}re sorry, looks like there was an issue...</p>
+
+          <p>{error.message}</p>
         </body>
       </html>
     );

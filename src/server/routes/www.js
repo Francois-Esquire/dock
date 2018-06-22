@@ -10,7 +10,7 @@ async function html(ctx) {
   try {
     ctx.body = await markup.render(ctx);
   } catch (e) {
-    ctx.body = markup.error(e, (ctx.status = 500));
+    ctx.body = markup.error(ctx, e, 500);
   }
 }
 

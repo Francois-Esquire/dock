@@ -107,26 +107,26 @@ var Application$1 = Application;
 
 class Markup {
   constructor() {
-    this.createStream = this.createStream.bind(this);
+    this.createRenderStream = this.createRenderStream.bind(this);
   }
-  createStream() {
+  createRenderStream(html) {
     const body = new stream.Transform({
       transform(chunk, encoding, callback) {
         callback(undefined, chunk);
       },
     });
     body.write('<!DOCTYPE html>');
-    return body;
+    return server.renderToStaticNodeStream(html).pipe(body);
   }
-  error(ctx, error, code) {
-    ctx.status = code;
+  error(ctx, error) {
+    ctx.status = error.code || (error.code = 500);
     const html = (
       React.createElement( 'html', { lang: "en-US" },
         React.createElement( 'head', null,
           React.createElement( 'meta', { charSet: "utf-8" }),
           React.createElement( 'meta', { httpEquiv: "Content-Language", content: "en" }),
           React.createElement( 'meta', { name: "viewport", content: "width=device-width, initial-scale=1" }),
-          React.createElement( 'title', null, "Oops - ", code )
+          React.createElement( 'title', null, "Oops - ", error.code )
         ),
         React.createElement( 'body', null,
           React.createElement( 'p', null, "We", "'", "re sorry, looks like there was an issue..." ),
@@ -134,7 +134,7 @@ class Markup {
         )
       )
     );
-    return server.renderToStaticNodeStream(html).pipe(this.createStream());
+    return this.createRenderStream(html);
   }
   async render(ctx) {
     const app = server.renderToString(
@@ -164,7 +164,7 @@ class Markup {
         )
       )
     );
-    return server.renderToStaticNodeStream(html).pipe(this.createStream());
+    return this.createRenderStream(html);
   }
 }
 var index = new Markup();

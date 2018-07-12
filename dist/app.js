@@ -11,16 +11,16 @@ var koaCompress = require('koa-compress');
 var koaCors = require('@koa/cors');
 
 const markup = require('./www');
-async function html(ctx) {
+const www = new KoaRouter();
+www.get('/*', async function html(ctx) {
   ctx.set('Content-Type', 'text/html');
   try {
     ctx.body = await markup.render(ctx);
   } catch (e) {
-    ctx.body = markup.error(ctx, e, 500);
+    if (e.code === undefined) { e.code = 500; }
+    ctx.body = markup.error(ctx, e);
   }
-}
-const www = new KoaRouter();
-www.get('/*', html);
+});
 
 const api = new KoaRouter({ prefix: '/api' });
 api.get(/\/*/, async function rest(ctx) {
@@ -56,7 +56,7 @@ async function responseTime(ctx, next) {
 }
 
 async function statics(ctx, next) {
-  if (/\.(ico|png|jpg|jpeg|svg|css|js|json)$/.test(ctx.path)) {
+  if (/\.(ico|png|jpg|jpeg|svg|css|js|json|html)$/.test(ctx.path)) {
     try {
       const { path, root } = ctx;
       await koaSend(ctx, path, { root });

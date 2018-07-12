@@ -1,7 +1,7 @@
 import koaSend from 'koa-send';
 
 export default async function statics(ctx, next) {
-  if (/\.(ico|png|jpg|jpeg|svg|css|js|json)$/.test(ctx.path)) {
+  if (/\.(ico|png|jpg|jpeg|svg|css|js|json|html)$/.test(ctx.path)) {
     try {
       const { path, root } = ctx;
 

@@ -9,9 +9,7 @@
 const { spawn } = require('child_process');
 const http = require('http');
 
-const { PORT = 3000 } = process.env;
-
-const port = PORT;
+const { PORT: port = 3000 } = process.env;
 
 const cwd = process.cwd();
 
@@ -85,7 +83,7 @@ async function serve() {
 
     if (run.watcher) await setupWatcher();
 
-    if (run.webpack) await setupWebpackMiddleware(server);
+    if (run.webpack) wp = await setupWebpackMiddleware(server);
 
     serve();
   });
@@ -155,8 +153,6 @@ async function setupWebpackMiddleware(server) {
     dev,
     hot,
   });
-
-  wp = koaWebpackMiddleware;
 
   let initialized = false;
 

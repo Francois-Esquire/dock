@@ -1,4 +1,4 @@
-const port = process.env.PORT || (process.env.PORT = 3000);
+const { PORT: port = 3000 } = process.env;
 
 try {
   // eslint-disable-next-line global-require

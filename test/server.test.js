@@ -7,12 +7,54 @@ import markup from '../src/www';
 
 const server = app.callback();
 
-test('App: headers', async t => {
+test('App: checklist default headers', async t => {
   const response = await request(server).get('/');
 
   const { headers } = response;
 
-  t.is(headers['content-type'], 'text/html');
+  t.plan(Object.keys(headers).length);
+
+  // TODO:
+  // Caching headers
+  // CSP headers
+
+  const checklist = [
+    // GENERAL
+    { header: 'date', exists: true },
+    { header: 'response-time', exists: true },
+    { header: 'connection', value: 'close' },
+    { header: 'transfer-encoding', value: 'chunked' },
+    // CONTENT DESCRIPTION
+    { header: 'content-type', value: 'text/html' },
+    { header: 'content-encoding', value: 'gzip' },
+    // CACHE
+    { header: 'vary', value: 'Origin, Accept-Encoding' },
+    { header: 'x-dns-prefetch-control', value: 'off' },
+    // SECURITY
+    {
+      // only valid over https, ignored on http
+      header: 'strict-transport-security',
+      value: 'max-age=15552000; includeSubDomains',
+    },
+    { header: 'x-frame-options', value: 'SAMEORIGIN' },
+    { header: 'x-xss-protection', value: '1; mode=block' },
+    // SECURITY / IE8
+    { header: 'x-download-options', value: 'noopen' },
+    { header: 'x-content-type-options', value: 'nosniff' },
+  ];
+
+  checklist.forEach(({ header, value, exists }) => {
+    switch (true) {
+      default:
+        throw new Error('An Assertion Pair Is Required');
+      case typeof value === 'string':
+        t.is(headers[header], value);
+        break;
+      case typeof exists === 'boolean':
+        t.true(typeof headers[header] === 'string');
+        break;
+    }
+  });
 });
 
 test('App: route /*', async t => {

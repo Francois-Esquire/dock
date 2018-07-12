@@ -22,8 +22,9 @@ class Markup {
     return renderToStaticNodeStream(html).pipe(body);
   }
 
-  error(ctx, error, code) {
-    ctx.status = code;
+  error(ctx, error) {
+    // eslint-disable-next-line no-param-reassign
+    ctx.status = error.code || (error.code = 500);
 
     const html = (
       <html lang="en-US">
@@ -31,7 +32,7 @@ class Markup {
           <meta charSet="utf-8" />
           <meta httpEquiv="Content-Language" content="en" />
           <meta name="viewport" content="width=device-width, initial-scale=1" />
-          <title>Oops - {code}</title>
+          <title>Oops - {error.code}</title>
         </head>
         <body>
           <p>We{"'"}re sorry, looks like there was an issue...</p>

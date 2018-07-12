@@ -4,18 +4,17 @@ import KoaRouter from 'koa-router';
 // otherwise working for tests.
 import markup from '../../www';
 
-async function html(ctx) {
+const www = new KoaRouter();
+
+www.get('/*', async function html(ctx) {
   ctx.set('Content-Type', 'text/html');
 
   try {
     ctx.body = await markup.render(ctx);
   } catch (e) {
-    ctx.body = markup.error(ctx, e, 500);
+    if (e.code === undefined) e.code = 500;
+    ctx.body = markup.error(ctx, e);
   }
-}
-
-const www = new KoaRouter();
-
-www.get('/*', html);
+});
 
 export default www;

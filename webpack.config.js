@@ -99,27 +99,6 @@ if (debug === false) {
 
 const exclude = /node_modules/;
 
-const styles = [
-  {
-    loader: 'css',
-    options: {
-      minimize: false,
-      modules: true,
-      importLoaders: 2,
-      localIdentName: '[local]___[name]',
-    },
-  },
-  {
-    loader: 'postcss',
-    options: {
-      sourceMap: true,
-    },
-  },
-  {
-    loader: 'sass',
-  },
-];
-
 const [jsx, css, url] = [
   {
     test: /(\.js|\.jsx)$/,
@@ -129,9 +108,26 @@ const [jsx, css, url] = [
   {
     test: /\.(css|s[ac]ss)$/,
     exclude,
-    use: debug
-      ? ['style'].concat(styles)
-      : [MiniCssExtractPlugin.loader].concat(styles),
+    use: (debug ? ['style'] : [MiniCssExtractPlugin.loader]).concat(
+      {
+        loader: 'css',
+        options: {
+          minimize: false,
+          modules: true,
+          importLoaders: 2,
+          localIdentName: '[local]___[name]',
+        },
+      },
+      {
+        loader: 'postcss',
+        options: {
+          sourceMap: true,
+        },
+      },
+      {
+        loader: 'sass',
+      },
+    ),
   },
   {
     test: /\.(png|jpg|gif)$/,

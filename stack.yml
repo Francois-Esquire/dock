@@ -9,7 +9,7 @@ networks:
 
 services:
   web:
-    image: koa-dock
+    image: michaeltobia/dock-graphql
     networks:
       - traefik
     deploy:
@@ -17,19 +17,19 @@ services:
       restart_policy:
         condition: on-failure
       labels:
-        - "traefik.enable=true"
-        - "traefik.backend=web"
-        - "traefik.docker.network=traefik"
-        - "traefik.frontend.rule=Host:localhost"
-        - "traefik.port=3000"
+        - 'traefik.enable=true'
+        - 'traefik.backend=web'
+        - 'traefik.docker.network=traefik'
+        - 'traefik.frontend.rule=Host:localhost'
+        - 'traefik.port=3000'
 
   traefik:
     image: traefik:1.6
     command:
-      - "--api"
-      - "--entrypoints=Name:http Address::80 Redirect.EntryPoint:https"
-      - "--entrypoints=Name:https Address::443 TLS"
-      - "--defaultentrypoints=http,https"
+      - '--api'
+      - '--entrypoints=Name:http Address::80 Redirect.EntryPoint:https'
+      - '--entrypoints=Name:https Address::443 TLS'
+      - '--defaultentrypoints=http,https'
       # WHEN YOU'RE READY TO DEPLOY
       # - "--acme"
       # - "--acme.storage=acme.json"
@@ -37,10 +37,10 @@ services:
       # - "--acme.httpChallenge.entryPoint=http"
       # - "--acme.onHostRule=true"
       # - "--acme.email=inquiry@localhost"
-      - "--docker"
-      - "--docker.swarmMode"
-      - "--docker.domain=localhost"
-      - "--docker.watch"
+      - '--docker'
+      - '--docker.swarmMode'
+      - '--docker.domain=localhost'
+      - '--docker.watch'
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /opt/traefik/acme.json:/acme.json

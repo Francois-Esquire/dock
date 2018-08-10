@@ -5,25 +5,25 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: koa-dock
+    image: dock-graphql
     container_name: web
     labels:
-      - "traefik.enable=true"
-      - "traefik.backend=web"
-      - "traefik.frontend.rule=Host:localhost"
-      - "traefik.port=3000"
+      - 'traefik.enable=true'
+      - 'traefik.backend=web'
+      - 'traefik.frontend.rule=Host:localhost'
+      - 'traefik.port=3000'
 
   traefik:
     image: traefik:1.6
     container_name: traefik
     command:
-      - "--api"
-      - "--entrypoints=Name:http Address::80 Redirect.EntryPoint:https"
-      - "--entrypoints=Name:https Address::443 TLS"
-      - "--defaultentrypoints=http,https"
-      - "--docker"
-      - "--docker.domain=localhost"
-      - "--docker.watch"
+      - '--api'
+      - '--entrypoints=Name:http Address::80 Redirect.EntryPoint:https'
+      - '--entrypoints=Name:https Address::443 TLS'
+      - '--defaultentrypoints=http,https'
+      - '--docker'
+      - '--docker.domain=localhost'
+      - '--docker.watch'
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     ports:

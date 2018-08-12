@@ -4,7 +4,7 @@ import React from 'react';
 import { shallow, configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 
-import Button from '../src/components/primitives/Button';
+import Button from '../../src/components/primitives/Button';
 
 test.before(() => {
   configure({ adapter: new Adapter() });

@@ -2,8 +2,8 @@ import test from 'ava';
 import stream from 'stream';
 import request from 'supertest';
 
-import app from '../src/server/app';
-import markup from '../src/www';
+import app from '../../src/server/app';
+import markup from '../../src/www';
 
 const server = app.callback();
 

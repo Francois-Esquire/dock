@@ -9,7 +9,8 @@ class Markup {
   constructor() {
     this.createRenderStream = this.createRenderStream.bind(this);
   }
-  // eslint-disable-next-line
+
+  // eslint-disable-next-line class-methods-use-this
   createRenderStream(html) {
     const body = new stream.Transform({
       transform(chunk, encoding, callback) {

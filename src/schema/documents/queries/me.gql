@@ -1,0 +1,7 @@
+#import "../fragments/node.user.gql"
+
+query Me {
+  me {
+    ...UserFragment
+  }
+}

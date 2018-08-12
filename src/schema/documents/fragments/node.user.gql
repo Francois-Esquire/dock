@@ -1,0 +1,6 @@
+#import "./node.gql"
+
+fragment UserFragment on User {
+  ...NodeFragment
+  handle
+}

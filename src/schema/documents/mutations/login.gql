@@ -1,0 +1,7 @@
+#import "../fragments/node.user.gql"
+
+mutation Login($profile: Profile!) {
+  login(profile: $profile) {
+    ...UserFragment
+  }
+}

@@ -1,0 +1,31 @@
+interface Node {
+  id: ID!
+}
+
+type User implements Node {
+  id: ID!
+  handle: String
+}
+
+type Query {
+  me: User
+  node(id: ID!): Node
+}
+
+input Profile {
+  handle: String!
+  password: String!
+}
+
+type Mutation {
+  signup(profile: Profile!): User
+  login(profile: Profile!): User
+  changeHandle(handle: String!): User
+  changePassword(pass: String!, word: String!): Boolean
+  deleteAccount: Boolean
+}
+
+schema {
+  query: Query
+  mutation: Mutation
+}

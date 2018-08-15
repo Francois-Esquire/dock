@@ -1,6 +1,8 @@
 'use strict';
 
 var KoaRouter = require('koa-router');
+var koaBodyParser = require('koa-bodyparser');
+var apolloServerKoa = require('apollo-server-koa');
 var μs = require('microseconds');
 var koaSend = require('koa-send');
 var Koa = require('koa');
@@ -28,8 +30,50 @@ api.get(/\/*/, async function rest(ctx) {
   ctx.body = 'welcome to the api endpoint';
 });
 
+async function createContext(ctx) {
+  return ctx;
+}
+
+async function createRootValue() {
+  return {};
+}
+
+function formatError() {}
+
+const graphql = new KoaRouter();
+const graphqlEndpoint = '/graphql';
+const bodyParser = koaBodyParser({
+  extendTypes: {
+    json: ['application/graphql'],
+  },
+});
+const _graphql = apolloServerKoa.graphqlKoa(async function graph(ctx) {
+  const { schema } = ctx;
+  const context = await createContext(ctx);
+  const rootValue = await createRootValue(ctx);
+  return {
+    schema,
+    context,
+    rootValue,
+    formatError,
+    formatResponse(response) {
+      return response;
+    },
+  };
+});
+const _graphiql =
+  apolloServerKoa.graphiqlKoa({
+        endpointURL: graphqlEndpoint,
+      });
+graphql
+  .post(graphqlEndpoint, bodyParser, _graphql)
+  .get(graphqlEndpoint, bodyParser, _graphql);
+if (_graphiql) { graphql.get('/graphiql', _graphiql); }
+
 const router = new KoaRouter();
 router
+  .use(graphql.routes())
+  .use(graphql.allowedMethods())
   .use(api.routes())
   .use(api.allowedMethods())
   .use(www.routes())
@@ -65,7 +109,12 @@ async function statics(ctx, next) {
   } else { await next(); }
 }
 
+const schema = require('./schema');
+const { mongo, redis } = require('./db');
 const app = new Koa();
+app.context.schema = schema;
+app.context.mongo = mongo;
+app.context.redis = redis;
 app.context.root = `${__dirname}/public`;
 app
   .use(catcher)

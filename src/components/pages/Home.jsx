@@ -4,6 +4,8 @@ import styles from './styles/home.scss';
 
 import Button from '../primitives/Button';
 
+import Toaster from '../contexts/Toaster';
+
 import simoneHutschScrape from '../../../static/simone-hutsch-scrape.jpg';
 
 export default function Home() {
@@ -20,7 +22,16 @@ export default function Home() {
       <img className={styles.img} src={simoneHutschScrape} alt="blue skies" />
 
       <footer className={styles.footer}>
-        <Button className={styles.button}>Explore Now</Button>
+        <Toaster>
+          {toaster => (
+            <Button
+              className={styles.button}
+              onClick={() => toaster.notify({ message: 'go exploring' })}
+            >
+              Explore Now
+            </Button>
+          )}
+        </Toaster>
       </footer>
     </article>
   );

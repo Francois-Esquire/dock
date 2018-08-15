@@ -4,6 +4,7 @@ import buble from 'rollup-plugin-buble';
 import replace from 'rollup-plugin-re';
 import resolve from 'rollup-plugin-node-resolve';
 import postCSS from 'rollup-plugin-postcss';
+import graphql from 'rollup-plugin-graphql';
 import cleanup from 'rollup-plugin-cleanup';
 
 import pkg from './package.json';
@@ -20,7 +21,15 @@ const watch = {
 
 const extensions = ['.js', '.jsx', '.css', '.scss'];
 
-const [nodeEnv, serverEnv, replaceWWW] = [
+const [
+  nodeEnv,
+  serverEnv,
+  clientSwap,
+  replaceWWW,
+  replaceDB,
+  replaceSchema,
+  replaceModels,
+] = [
   {
     test: 'process.env.NODE_ENV',
     replace: JSON.stringify(process.env.NODE_ENV),
@@ -30,8 +39,25 @@ const [nodeEnv, serverEnv, replaceWWW] = [
     replace: JSON.stringify(true),
   },
   {
+    // replace browser client with server mock
+    test: "import client from '../../www/client';",
+    replace: 'const client = { mutate: () => undefined }',
+  },
+  {
     test: "import markup from '../../www';",
     replace: "const markup = require('./www');",
+  },
+  {
+    test: "import { mongo, redis } from '../db/db';",
+    replace: "const { mongo, redis } = require('./db');",
+  },
+  {
+    test: "import schema from '../schema';",
+    replace: "const schema = require('./schema');",
+  },
+  {
+    test: "import * as models from '../models';",
+    replace: "const models = require('./models');",
   },
 ];
 
@@ -54,6 +80,7 @@ const plugins = {
       return code;
     },
   },
+  graphql: graphql(),
   clean: cleanup(),
   resolve: resolve({
     extensions,
@@ -90,10 +117,10 @@ const plugins = {
   }),
   replace: {
     server: replace({
-      patterns: [nodeEnv, replaceWWW],
+      patterns: [nodeEnv, replaceWWW, replaceDB, replaceSchema, replaceModels],
     }),
     www: replace({
-      patterns: [nodeEnv, serverEnv],
+      patterns: [nodeEnv, serverEnv, clientSwap, replaceSchema],
     }),
   },
 };
@@ -106,10 +133,12 @@ const www = {
     file: 'dist/www.js',
     format: 'cjs',
   },
+  // inlineDynamicImport: true,
   plugins: [
     plugins.replace.www,
     plugins.assetTransform,
     plugins.resolve,
+    plugins.graphql,
     plugins.postcss,
     plugins.postcssTransform,
     plugins.buble,
@@ -120,15 +149,22 @@ const www = {
 const server = {
   external,
   watch,
-  input: 'src/server/app.js',
+  input: [
+    'src/server/app.js',
+    'src/db/db.js',
+    'src/schema/schema.js',
+    'src/models/models.js',
+  ],
   output: {
     interop: false,
-    file: 'dist/app.js',
+    dir: 'dist',
     format: 'cjs',
   },
+  experimentalCodeSplitting: true,
   plugins: [
     plugins.replace.server,
     plugins.resolve,
+    plugins.graphql,
     plugins.buble,
     plugins.clean,
   ],

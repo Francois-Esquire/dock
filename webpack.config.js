@@ -99,7 +99,7 @@ if (debug === false) {
 
 const exclude = /node_modules/;
 
-const [jsx, css, url] = [
+const [jsx, css, url, graphql] = [
   {
     test: /(\.js|\.jsx)$/,
     exclude,
@@ -143,9 +143,13 @@ const [jsx, css, url] = [
       },
     ],
   },
+  {
+    test: /\.(gql|graphql)/,
+    loader: 'graphql-tag/loader',
+  },
 ];
 
-const rules = [jsx, css, url];
+const rules = [jsx, css, url, graphql];
 
 const www = {
   mode,

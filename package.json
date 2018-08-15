@@ -1,14 +1,14 @@
 {
   "private": true,
-  "name": "dock",
-  "description": "Simple Starter Setup",
-  "version": "0.2.1",
+  "name": "dock-graphql",
+  "description": "Simple Starter Setup With GraphQL",
+  "version": "0.1.0",
   "main": "index.js",
   "engines": {
     "node": ">=7.6.0"
   },
   "deploy": {
-    "image": "dock",
+    "image": "dock-graphql",
     "registry": "michaeltobia",
     "tags": [
       "latest"
@@ -46,12 +46,17 @@
   },
   "dependencies": {
     "@koa/cors": "^2.2.2",
-    "apollo-server-koa": "^2.0.0",
+    "apollo-cache-inmemory": "^1.2.7",
+    "apollo-client": "^2.3.8",
+    "apollo-link-http": "^1.5.4",
+    "apollo-link-schema": "^1.1.0",
+    "apollo-server-koa": "^1.4.0",
     "bcrypt": "^3.0.0",
     "graphql": "^0.13.2",
     "graphql-tools": "^3.1.1",
     "ioredis": "^3.2.2",
     "koa": "^2.5.2",
+    "koa-bodyparser": "^4.2.1",
     "koa-compress": "^3.0.0",
     "koa-helmet": "^4.0.0",
     "koa-router": "^7.4.0",
@@ -62,6 +67,7 @@
     "mongoose": "^5.2.7",
     "prop-types": "^15.6.2",
     "react": "^16.4.1",
+    "react-apollo": "^2.1.11",
     "react-dom": "^16.4.1",
     "react-router-dom": "^4.3.1"
   },
@@ -115,6 +121,7 @@
     "rollup": "^0.62.0",
     "rollup-plugin-buble": "^0.19.2",
     "rollup-plugin-cleanup": "^3.0.0",
+    "rollup-plugin-graphql": "^0.1.0",
     "rollup-plugin-node-resolve": "^3.3.0",
     "rollup-plugin-postcss": "^1.6.2",
     "rollup-plugin-re": "^1.0.7",

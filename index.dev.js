@@ -18,6 +18,7 @@ const cwd = process.cwd();
 // - set up redis for session / cache (rendered html, assets)
 
 const debug = {
+  mongod: !true,
   redis: !true,
   rollup: !true,
   koa: true,
@@ -28,11 +29,14 @@ const run = {
   webpack: true,
   rollup: true,
   redis: !true,
+  mongod: !true,
 };
 
 let wp = null;
 let app = null;
 let callback = (req, res) => res.end('Initializing. Please wait.');
+
+let initialized = false;
 
 async function serve() {
   try {
@@ -52,10 +56,13 @@ async function serve() {
 }
 
 (function startup() {
+  let mongod;
   let redis;
   let rollup;
 
   process.on('close', () => {
+    // extra precaution
+    if (mongod) mongod.kill();
     if (redis) redis.kill();
     if (rollup) rollup.kill();
   });
@@ -65,7 +72,16 @@ async function serve() {
   server.listen(port, async error => {
     if (error) throw error;
 
+    process.env.MONGODB_URI = 'mongodb://127.0.0.1:27017/dock-graphql';
+    process.env.REDIS_URL = 'redis://127.0.0.1:6379';
+
     if (debug.koa) process.env.DEBUG = 'koa*';
+
+    if (run.mongod) {
+      mongod = spawn('mongod', {
+        stdio: debug.mongod ? 'inherit' : null,
+      });
+    }
 
     if (run.redis) {
       redis = spawn('redis-server', {
@@ -86,6 +102,8 @@ async function serve() {
     if (run.webpack) wp = await setupWebpackMiddleware(server);
 
     serve();
+
+    initialized = true;
   });
 })();
 
@@ -98,14 +116,38 @@ async function setupWatcher() {
 
   await new Promise(resolve => {
     watcher.on('ready', () => {
+      const mongoose = require('mongoose');
+
       watcher.on('change', path => {
-        console.log('\t\x1b[36m%s\x1b[0m', `change in path: ${path}`);
+        if (initialized) {
+          console.log('\t\x1b[36m%s\x1b[0m', `change in path: ${path}`);
 
-        if (path !== 'dist/app.js') delete require.cache[`${cwd}/dist/app.js`];
+          if (path !== 'dist/app.js')
+            delete require.cache[`${cwd}/dist/app.js`];
 
-        delete require.cache[`${cwd}/${path}`];
+          if (path === 'dist/models.js') {
+            delete require.cache[`${cwd}/dist/schema.js`];
 
-        process.nextTick(serve);
+            // avoiding "Topology Was Destroyed" - error;
+            Object.keys(mongoose.models).forEach(
+              name => delete mongoose.models[name],
+            );
+            Object.keys(mongoose.modelSchemas).forEach(
+              name => delete mongoose.modelSchemas[name],
+            );
+          }
+
+          /* clean out deps */
+
+          if (path === 'dist/schema.js') {
+            // when schema needs reloading for ssr.
+            delete require.cache[`${cwd}/dist/www.js`];
+          }
+
+          delete require.cache[`${cwd}/${path}`];
+
+          process.nextTick(serve);
+        }
       });
 
       resolve();

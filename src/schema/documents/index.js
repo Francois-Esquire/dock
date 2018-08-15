@@ -1,7 +1,5 @@
-import fs from 'fs';
+import * as fragments from './fragments';
+import * as mutations from './mutations';
+import * as queries from './queries';
 
-const fragments = {};
-
-const documents = {};
-
-export default documents;
+export { fragments, mutations, queries };

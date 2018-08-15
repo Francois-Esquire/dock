@@ -1,4 +1,6 @@
-import { User } from '../../models';
+import models from '../models';
+
+const { User } = models;
 
 export default {
   me(_) {

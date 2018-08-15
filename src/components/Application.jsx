@@ -1,8 +1,9 @@
 import React from 'react';
 
-import styles from './styles/app.scss';
+import Toaster from './Toaster';
+import Modal from './Modal';
 
-import Root from './pages/Root';
+import Layout from './layouts/Main';
 
 class Application extends React.PureComponent {
   // eslint-disable-next-line class-methods-use-this
@@ -11,10 +12,13 @@ class Application extends React.PureComponent {
   }
 
   render() {
+    // declare all contexts that the app requires.
     return (
-      <main className={styles.main}>
-        <Root />
-      </main>
+      <Toaster>
+        <Modal>
+          <Layout />
+        </Modal>
+      </Toaster>
     );
   }
 }

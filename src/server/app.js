@@ -5,12 +5,19 @@ import koaUserAgent from 'koa-useragent';
 import koaCompress from 'koa-compress';
 import koaCors from '@koa/cors';
 
+import schema from '../schema';
+
+import { mongo, redis } from '../db/db';
+
 import router from './routes';
 
 import { catcher, responseTime, statics } from './middleware';
 
 const app = new Koa();
 
+app.context.schema = schema;
+app.context.mongo = mongo;
+app.context.redis = redis;
 app.context.root = `${__dirname}/public`;
 
 app

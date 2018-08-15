@@ -2,12 +2,24 @@ import stream from 'stream';
 import React from 'react';
 import { renderToString, renderToStaticNodeStream } from 'react-dom/server';
 import { StaticRouter } from 'react-router-dom';
+import { ApolloProvider, getDataFromTree } from 'react-apollo';
+import { ApolloClient } from 'apollo-client';
+import { InMemoryCache } from 'apollo-cache-inmemory';
+import { SchemaLink } from 'apollo-link-schema';
 
 import Application from '../components/Application';
+
+import schema from '../schema';
 
 class Markup {
   constructor() {
     this.createRenderStream = this.createRenderStream.bind(this);
+
+    const link = new SchemaLink({ schema, context: null, rootValue: null });
+
+    const cache = new InMemoryCache();
+
+    this.client = new ApolloClient({ ssrMode: true, link, cache });
   }
 
   // eslint-disable-next-line class-methods-use-this
@@ -22,6 +34,19 @@ class Markup {
 
     return renderToStaticNodeStream(html).pipe(body);
   }
+
+  // eslint-disable-next-line class-methods-use-this
+  // createLocalClient(schema) {
+  //   const link = new SchemaLink({ schema });
+
+  //   const cache = new InMemoryCache();
+
+  //   const client = new ApolloClient({ ssrMode: true, link, cache });
+
+  //   console.log(schema);
+
+  //   return client;
+  // }
 
   error(ctx, error) {
     // eslint-disable-next-line no-param-reassign
@@ -47,11 +72,37 @@ class Markup {
   }
 
   async render(ctx) {
-    const app = renderToString(
-      <StaticRouter location={ctx.path} context={(ctx.state = ctx.state || {})}>
-        <Application />
-      </StaticRouter>,
+    const { client } = this;
+    // const client = this.createLocalClient(ctx.schema);
+
+    // reset with every request.
+    client.cache.reset();
+
+    // link schema with current context.
+    client.link = new SchemaLink({
+      schema,
+      context: ctx,
+      rootValue: ctx.state,
+    });
+
+    const _ = (
+      <ApolloProvider client={client}>
+        <StaticRouter
+          location={ctx.path}
+          context={(ctx.state = ctx.state || {})}
+        >
+          <Application />
+        </StaticRouter>
+      </ApolloProvider>
     );
+
+    await getDataFromTree(_);
+
+    const state = {
+      __$$__: client.extract(),
+    };
+
+    const app = renderToString(_);
 
     if (typeof ctx.state.status === 'number') ctx.status = ctx.state.status;
     else ctx.status = 200;
@@ -73,6 +124,18 @@ class Markup {
         <body>
           {/* eslint-disable-next-line react/no-danger */}
           <div id="app" dangerouslySetInnerHTML={{ __html: app }} />
+
+          <script // eslint-disable-next-line react/no-danger
+            dangerouslySetInnerHTML={{
+              __html: Object.keys(state).map(
+                key =>
+                  `window.${key}=${JSON.stringify(state[key]).replace(
+                    /</g,
+                    '\\u003c',
+                  )};`,
+              ),
+            }}
+          />
 
           {/* js */}
           <script type="text/javascript" src="/js/vendors~main.js" />

@@ -4,6 +4,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
+import { ApolloProvider } from 'react-apollo';
+
+import client from './client';
 
 import Application from '../components/Application';
 
@@ -11,9 +14,12 @@ const supportsHistory = 'pushState' in window.history;
 
 const appElement = document.getElementById('app');
 
-ReactDOM.hydrate(
-  <BrowserRouter forceRefresh={!supportsHistory}>
-    <Application />
-  </BrowserRouter>,
-  appElement,
+const app = (
+  <ApolloProvider client={client}>
+    <BrowserRouter forceRefresh={!supportsHistory}>
+      <Application />
+    </BrowserRouter>
+  </ApolloProvider>
 );
+
+ReactDOM.hydrate(app, appElement);
